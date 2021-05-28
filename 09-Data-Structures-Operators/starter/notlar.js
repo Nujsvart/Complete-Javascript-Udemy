@@ -194,6 +194,27 @@ console.log(guests); // or operatoru 0'i false olarak gordugu icin 10 dondurdu.
 const guestsCorrect = restaurant.numGuests ?? 10;
 console.log(guestsCorrect); // nullish operator, 0 null bir deger olmadigi icin sonucu 0 dondurdu.
 
+//****************************************************************************************** */
+
+// for of - Loop
+
+const menuNew = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+for (const item of menuNew) {
+  console.log(item);
+}
+
+for (const item of menuNew.entries()) { // her elemani indexleriyle birlikte array olarak donduruyor.
+  console.log(item);
+}
+
+for (const [i, el] of menuNew.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+
+
+
 
 
 
