@@ -1,16 +1,15 @@
-'use strict';
+"use strict";
 
 // Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+const flights = "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
 
 // Data needed for first part of the section
 const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  name: "Classico Italiano",
+  location: "Via Angelo Tavanti 23, Firenze, Italy",
+  categories: ["Italian", "Pizzeria", "Vegetarian", "Organic"],
+  starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese Salad"],
+  mainMenu: ["Pizza", "Pasta", "Risotto"],
 
   openingHours: {
     thu: {
@@ -38,11 +37,8 @@ const restaurant = {
   orderPizza: function (mainIngredient, ...otherIngredients) {
     console.log(mainIngredient);
     console.log(otherIngredients);
-  }
-
-
+  },
 };
-
 
 /* restaurant.orderDelivery({
   time: "22:30",
@@ -50,7 +46,6 @@ const restaurant = {
   mainIndex: 2,
   starterIndex: 2
 }) */
-
 
 // DESTRUCTURING
 
@@ -74,7 +69,9 @@ console.log(a, b);
 const { fri } = openingHours;
 console.log(fri);
 
-const { fri: {open, close}} = openingHours;
+const {
+  fri: { open, close },
+} = openingHours;
 console.log(open, close);
 
 // *************************************************************************************
@@ -106,7 +103,7 @@ console.log(letters);
 restaurant.orderPasta(...ingredients); // ES6
 // restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]); // Old way */
 
-// Objects 
+// Objects
 const newRestaurant = { foundedIn: 1988, ...restaurant, founder: "Guiseppe" };
 console.log(newRestaurant);
 
@@ -131,8 +128,8 @@ console.log(weekdays);
 // REST IN FUNCTIONS
 const add = function (...numbers) {
   let sum = 0;
-  numbers.forEach(number => sum += number);
-/*   for (let i = 0; i < numbers.length; i++){
+  numbers.forEach((number) => (sum += number));
+  /*   for (let i = 0; i < numbers.length; i++){
     sum += numbers[i];
   } */
   return sum;
@@ -153,7 +150,7 @@ console.log("---- OR ----");
 
 console.log(3 || "Esra"); // ilk deger true bir deger ise, sadece ilk degeri dondurup digerlerini gormezden gelir.
 console.log("" || "Esra");
-console.log(true || 0); 
+console.log(true || 0);
 console.log(undefined || null); // ikisi de false, son degeri dondurdu.
 console.log(undefined || 0 || "" || "Hello" || 23 || null);
 
@@ -181,7 +178,6 @@ if (restaurant.orderPizza) {
 
 restaurant.orderPizza && restaurant.orderPizza("mushrooms", "spinach"); // yukardakinin kisa hali.
 
-
 // Nullish Operator (??)
 console.log("---- ?? ----");
 
@@ -195,16 +191,18 @@ const guestsCorrect = restaurant.numGuests ?? 10;
 console.log(guestsCorrect); // nullish operator, 0 null bir deger olmadigi icin sonucu 0 dondurdu.
 
 //****************************************************************************************** */
-
+console.log("------FOR OF-------");
 // for of - Loop
 
 const menuNew = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menuNew);
 
 for (const item of menuNew) {
   console.log(item);
 }
 
-for (const item of menuNew.entries()) { // her elemani indexleriyle birlikte array olarak donduruyor.
+for (const item of menuNew.entries()) {
+  // her elemani indexleriyle birlikte array olarak donduruyor.
   console.log(item);
 }
 
@@ -212,12 +210,131 @@ for (const [i, el] of menuNew.entries()) {
   console.log(`${i + 1}: ${el}`);
 }
 
+//****************************************************************************************** */
 
+// ES2020 Optional Chaining
 
+// Old way
 
+if (restaurant.openingHours && restaurant.openingHours.mon) {
+  console.log(restaurant.openingHours.mon.open);
+}
 
+// With Optional chaining
+console.log(restaurant.openingHours.mon?.open); // mon varsa open'i yaz. yoksa undefined dondur.
+console.log(restaurant.openingHours?.mon?.open);
 
+// Practical Example
+const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? "closed";
+  console.log(`On ${day}, we open at ${open}`);
+}
 
+// Methods
+console.log(restaurant.order?.(0, 1) ?? "Boyle bir method yok");
+console.log(restaurant.orderPizza?.("mushroom", "sucuk", "salam") ?? "Boyle bir method yok");
 
+// Arrays
+
+const users = [
+  {
+    name: "Esra",
+    email: "hello@hello.com",
+  },
+];
+
+console.log(users[0]?.name ?? "User array is empty");
+console.log(users[1]?.name ?? "User array is empty");
+
+//****************************************************************************************** */
+
+// Object.keys() (Property NAMES)
+
+for (const day of Object.keys(openingHours)) {
+  console.log(day);
+}
+
+const properties = Object.keys(openingHours);
+
+let openStr = `We are open on ${properties.length} days: `;
+
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+
+console.log(openStr);
+
+// Object.values() (Property VALUES)
+
+const values = Object.values(openingHours);
+console.log(values);
+
+for (const value of values) {
+  console.log(value);
+}
+
+// Object.entries() (Entire Object) Array'e donduruyor
+
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+
+//****************************************************************************************** */
+
+console.log("-------SETS---------")
+
+// SETS
+
+// Set'lerin indexi yoktur ve bir set icinden value almanin yolu yoktur.
+// Bunun yerine array kullanilir.
+// Genelde array'deki duplicateleri temizlemek icin kullanilir.
+
+const ordersSet = new Set([
+  "Pasta",
+  "Pizza",
+  "Pizza",
+  "Risotto",
+  "Pasta",
+  "Pizza",
+])
+
+console.log(ordersSet); // All the duplicates are gone.
+
+console.log(new Set("Esra Discordia"));
+
+console.log(ordersSet.size)
+
+console.log(ordersSet.has("Pizza"));
+console.log(ordersSet.has("Bread"));
+
+ordersSet.add("Garlic Bread");
+ordersSet.add("Garlic Bread");
+ordersSet.delete("Risotto");
+/* ordersSet.clear(); */
+console.log(ordersSet);
+
+// Sets are iterable.
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+// Example Array
+
+const staff = ["Waiter", "Chef", "Waiter", "Manager", "Chef", "Waiter"];
+/* const staffUnique = new Set(staff); */
+const staffUnique = [...new Set(staff)]; // array formatina spread operatoru ile extract edildi.
+console.log(staffUnique);
+
+console.log(new Set("esradiscordia").size); // ayni harfleri cikararak sayiyor.
+
+//****************************************************************************************** */
+
+console.log("-------MAPS---------")
+
+// MAPS
 
