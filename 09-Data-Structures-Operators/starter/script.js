@@ -1,7 +1,8 @@
 "use strict";
 
 // Data needed for a later exercise
-const flights = "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+const flights =
+  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
 
 // Data needed for first part of the section
 const restaurant = {
@@ -59,8 +60,32 @@ const game = {
   team1: "Bayern Munich",
   team2: "Borrussia Dortmund",
   players: [
-    ["Neuer", "Pavard", "Martinez", "Alaba", "Davies", "Kimmich", "Goretzka", "Coman", "Muller", "Gnarby", "Lewandowski"],
-    ["Burki", "Schulz", "Hummels", "Akanji", "Hakimi", "Weigl", "Witsel", "Hazard", "Brandt", "Sancho", "Gotze"],
+    [
+      "Neuer",
+      "Pavard",
+      "Martinez",
+      "Alaba",
+      "Davies",
+      "Kimmich",
+      "Goretzka",
+      "Coman",
+      "Muller",
+      "Gnarby",
+      "Lewandowski",
+    ],
+    [
+      "Burki",
+      "Schulz",
+      "Hummels",
+      "Akanji",
+      "Hakimi",
+      "Weigl",
+      "Witsel",
+      "Hazard",
+      "Brandt",
+      "Sancho",
+      "Gotze",
+    ],
   ],
   score: "4:0",
   scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
@@ -143,7 +168,7 @@ console.log(avaraj.toFixed(2));
 
 for (const [takim, sayi] of Object.entries(game.odds)) {
   const teamStr = takim === "x" ? "draw" : `victory ${game[takim]}`;
-  console.log(`Odd of ${teamStr} ${sayi}`)
+  console.log(`Odd of ${teamStr} ${sayi}`);
 }
 
 /* console.log(`Odd of victory ${game.team1}: ${game.odds.team1}`)
@@ -154,5 +179,58 @@ console.log(`Odd of victory ${game.team2}: ${game.odds.team2}`) */
 
 console.log("**********************************************");
 
+/* Coding Challenge #3
+Let's continue with our football betting app! This time, we have a map called
+'gameEvents' (see below) with a log of the events that happened during the
+game. The values are the events themselves, and the keys are the minutes in which
+each event happened (a football game has 90 minutes plus some extra time).
+Your tasks:
+1. Create an array 'events' of the different game events that happened (no
+duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64
+was unfair. So remove this event from the game events log.
+3. Compute and log the following string to the console: "An event happened, on
+average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over 'gameEvents' and log each element to the console, marking
+whether it's in the first half or second half (after 45 min) of the game, like this:
+[FIRST HALF] 17: ⚽ GOAL */
 
+const gameEvents = new Map([
+  [17, "⚽ GOAL"],
+  [36, "� Substitution"],
+  [47, "⚽ GOAL"],
+  [61, "� Substitution"],
+  [64, "� Yellow card"],
+  [69, "� Red card"],
+  [70, "� Substitution"],
+  [72, "� Substitution"],
+  [76, "⚽ GOAL"],
+  [80, "⚽ GOAL"],
+  [92, "� Yello"],
+]);
 
+/* const eventsValues = gameEvents.values();
+console.log(eventsValues);
+
+const eventsSet = new Set([...eventsValues]);
+console.log(eventsSet) */
+
+const events = [new Set([...gameEvents.values()])]; // 1.
+console.log(events);
+
+gameEvents.delete(64); // 2.
+console.log(gameEvents);
+
+const eventSize = gameEvents.size;
+console.log(`An event happened, on average, every ${90 / eventSize} minutes`); //3.
+
+for (const [key, value] of gameEvents) {
+  // 4.
+  if (key <= 45) {
+    console.log(`[FIRST HALF] ${key}: ${value}`);
+  } else {
+    console.log(`[SECOND HALF] ${key}: ${value}`);
+  }
+}
+
+console.log("**********************************************");

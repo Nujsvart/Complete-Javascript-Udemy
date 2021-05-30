@@ -1,7 +1,8 @@
 "use strict";
 
 // Data needed for a later exercise
-const flights = "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+const flights =
+  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
 
 // Data needed for first part of the section
 const restaurant = {
@@ -27,11 +28,15 @@ const restaurant = {
   },
 
   orderDelivery: function ({ starterIndex, mainIndex, time, adress }) {
-    console.log(`Order received ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${adress} at ${time}`);
+    console.log(
+      `Order received ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${adress} at ${time}`
+    );
   },
 
   orderPasta: function (ing1, ing2, ing3) {
-    console.log(`Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`);
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
   },
 
   orderPizza: function (mainIngredient, ...otherIngredients) {
@@ -52,7 +57,11 @@ const restaurant = {
 const { name, openingHours, categories } = restaurant;
 console.log(name, openingHours, categories);
 
-const { name: restaurantName, openingHours: hours, categories: tags } = restaurant; // naming
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant; // naming
 
 const { menu = [], starterMenu: starters = [] } = restaurant; // objede olmayan property olusturup, default value verildi. starterMenu isim degisitirilip default value verildi.
 
@@ -118,7 +127,10 @@ console.log(restaurant.name);
 const arrK = [1, 2, ...[3, 4]]; // Spread, = in sag tarafinda
 
 // Rest ='in sol tarafinda, destructuring isleminde kullaniliyor
-const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu]; // rest element en sonda tanimlanmasi gerekiyor
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+]; // rest element en sonda tanimlanmasi gerekiyor
 console.log(pizza, risotto, otherFood);
 
 // Objects
@@ -140,7 +152,14 @@ console.log(add(2, 5));
 const x = [23, 5, 7];
 console.log(add(...x)); // Spread operator ile array`in icindekiler function'a aktarildi.
 
-restaurant.orderPizza("mushrooms", "zeytin", "salam", "sucuk", "misir", "cheddar");
+restaurant.orderPizza(
+  "mushrooms",
+  "zeytin",
+  "salam",
+  "sucuk",
+  "misir",
+  "cheddar"
+);
 
 // **********************************************************************************************
 
@@ -234,7 +253,10 @@ for (const day of days) {
 
 // Methods
 console.log(restaurant.order?.(0, 1) ?? "Boyle bir method yok");
-console.log(restaurant.orderPizza?.("mushroom", "sucuk", "salam") ?? "Boyle bir method yok");
+console.log(
+  restaurant.orderPizza?.("mushroom", "sucuk", "salam") ??
+    "Boyle bir method yok"
+);
 
 // Arrays
 
@@ -286,7 +308,7 @@ for (const [key, { open, close }] of entries) {
 
 //****************************************************************************************** */
 
-console.log("-------SETS---------")
+console.log("-------SETS---------");
 
 // SETS
 
@@ -301,13 +323,13 @@ const ordersSet = new Set([
   "Risotto",
   "Pasta",
   "Pizza",
-])
+]);
 
 console.log(ordersSet); // All the duplicates are gone.
 
 console.log(new Set("Esra Discordia"));
 
-console.log(ordersSet.size)
+console.log(ordersSet.size);
 
 console.log(ordersSet.has("Pizza"));
 console.log(ordersSet.has("Bread"));
@@ -334,7 +356,123 @@ console.log(new Set("esradiscordia").size); // ayni harfleri cikararak sayiyor.
 
 //****************************************************************************************** */
 
-console.log("-------MAPS---------")
+console.log("-------MAPS---------");
 
 // MAPS
 
+// objelerde key'ler string olmak zorundadir. map'de her turden property olabilir.
+// map olusturmanin en iyi yolu bos bir map olusturup, sonradan set etmektir.
+
+const rest = new Map();
+
+// set
+rest.set("name", "Classico Italiano");
+rest.set(1, "Firenze, Italy");
+rest.set(2, "Lisbon, Portugal");
+
+rest
+  .set("categories", ["Italian", "Pizzeria", "Vegetarian", "Organic"])
+  .set("open", 11)
+  .set("close", 23)
+  .set(true, "We are open :)")
+  .set(false, "We are closed :(");
+
+// get
+
+console.log(rest.get("name"));
+console.log(rest.get(true));
+
+const time = 8;
+console.log(rest.get(time > rest.get("open") && time < rest.get("close"))); // unreadable..
+
+const arr2 = [1, 2];
+rest.set(arr, "Test");
+
+rest.set(document.querySelector("h1"), "heading");
+rest.set("heading", document.querySelector("h1"));
+
+// methods
+console.log(rest.has("categories"));
+rest.delete(2);
+console.log(rest);
+console.log(rest.size);
+/* rest.clear(); */
+
+// *****************
+
+const question = new Map([
+  ["question", "What is the best programming language in the world?"],
+  [1, "C"],
+  [2, "Java"],
+  [3, "JavaScript"],
+  ["correct", 3],
+  [true, "Correct :)"],
+  [false, "Try again!"],
+]);
+
+console.log(question);
+
+// convert object to map
+console.log(Object.entries(openingHours));
+
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+// iteration
+
+for (const [i, val] of question) {
+  console.log(i, val);
+}
+
+console.log(question.get("question"));
+
+for (const [i, val] of question) {
+  if (typeof i === "number") {
+    console.log(`Answer ${i}: ${val}`);
+  }
+}
+
+/* const answer = Number(prompt("Your answer"));
+console.log(answer);
+
+if (answer === question.get("correct")) {
+  console.log(question.get(true));
+} else {
+  console.log(question.get(false));
+}
+
+question.get("correct") === answer ? console.log(question.get(true)) : console.log(question.get(false)); */
+
+// Convert map to array
+console.log([...question]);
+console.log(question.entries());
+console.log(question.keys());
+console.log(question.values());
+
+//****************************************************************************************** */
+
+// Sources of Data
+// 1) From the program itself: Data written directly in source code(status messages)
+// 2) From the UI: Data input from the user or data written in DOM (tasks in todo app)
+// 3) From external sources: Data fetched for example from web API(recipe objects)
+
+// -> Collection of data --> Data structure
+
+// Simple List? use -> ARRAY OR SETS
+// Key/Value Pairs? use -> OBJECTS OR MAPS
+
+// ARRAYS: Use when you need ordered list of values (might cointain duplicates) & Use when you need to manipulate data
+
+// SETS: Use when you need to work with unique values && Use when high-performance is really important && Use to remove duplicates from arrays
+
+//************ */
+
+// OBJECTS: More "traditional" key/value store ("abused" objects) && Easier to write annd access values with . and []
+// Use when you need to include functions (methods)
+// Use when working with JSON (can convert to map)
+
+//*************** */
+
+// MAPS: Better performance && Keys can have any data type && Easy to iterate && Easy to compute size
+// Use when you simply need to map key to values
+// Use when you need keys that are not strings
