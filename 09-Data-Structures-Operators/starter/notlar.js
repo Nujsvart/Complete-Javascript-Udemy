@@ -476,3 +476,178 @@ console.log(question.values());
 // MAPS: Better performance && Keys can have any data type && Easy to iterate && Easy to compute size
 // Use when you simply need to map key to values
 // Use when you need keys that are not strings
+
+//****************************************************************************************** */
+
+// WORKING WITH STRINGS
+
+const airline = "Tap Air Portugal";
+
+// indexOf() , lastIndexOf()
+
+console.log(airline.indexOf("r"));
+console.log(airline.lastIndexOf("r"));
+console.log(airline.indexOf("Portugal"));
+
+// slice()
+
+console.log(airline.slice(4)); // Hard-coded
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(" "))); // first word
+console.log(airline.slice(airline.lastIndexOf(" ") + 1)); // last word
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1);
+  if (s === "B" || s === "E") {
+    console.log("You got the middle seat");
+  } else {
+    console.log("You got lucky");
+  }
+};
+
+checkMiddleSeat("11B");
+checkMiddleSeat("23C");
+
+// toLowerCase() , toUpperCase()
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Fix capitalization in name
+
+const passenger = "eSrA"; // Esra
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// function
+
+const duzelt = function (n) {
+  const nLower = n.toLowerCase();
+  const nCorrect = nLower[0].toUpperCase() + nLower.slice(1);
+  console.log(nCorrect);
+};
+
+duzelt("eSrA diSCordiA");
+
+// Comparing emails // trim()
+
+const email = "hello@jonas.io";
+const loginEmail = "   Hello@Jonas.Io  \n";
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+
+const duzgunMail = function (mail) {
+  const duzgun = mail.toLowerCase().trim();
+  if (duzgun === email) {
+    console.log("Correct");
+  } else {
+    console.log("Wrong");
+  }
+};
+
+duzgunMail(loginEmail);
+duzgunMail("eSRa@DiSCordia.oRG");
+
+// Replacing // replace()
+
+const priceGB = "288,97£";
+const priceUS = priceGB.replace("£", "$").replace(",", "."); // chaining
+console.log(priceUS);
+
+const announcement =
+  "All passengers come to barding door 23. Boarding door 23!";
+console.log(announcement.replace("door", "gate"));
+console.log(announcement.replace(/door/g, "gate")); // with regexp
+
+// Booleans
+
+const plane = "Airbus A320neo";
+
+console.log(plane.includes("A320")); // true
+console.log(plane.includes("Boeing")); // false
+
+console.log(plane.startsWith("Air")); // true
+console.log(plane.startsWith("A32")); // false
+
+if (plane.startsWith("Airbus") && plane.endsWith("neo")) {
+  console.log("Part of the NEW Airbus family");
+}
+
+// Practice exercise
+
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase(); // her zaman kullanilmali
+  if (baggage.includes("knife") || baggage.includes("gun")) {
+    console.log("You are NOT allowed on board");
+  } else {
+    console.log("Welcome aboard!");
+  }
+};
+
+checkBaggage("I have a laptop, some Food and a pocket Knife");
+checkBaggage("Socks and camera");
+checkBaggage("Got some snacks and a gun for protection");
+
+// split() -- parametreye gore kelimeleri bolerek arrey'e ceviriyor.
+
+console.log("a+very+nice+string".split("+")); // + lardan bolerek her kelimeyi array'e depoluyor.
+console.log("Esra Discordia".split(" ")); // ["Esra", "Discordia"]
+
+const [firstName, lastName] = "Esra Discordia".split(" "); // destructuring
+console.log(firstName, lastName);
+
+// join() -- split()`in tam tersi array'i string'e ceviriyor.
+
+const newName = ["Mrs.", firstName, lastName.toUpperCase()].join(" "); //
+console.log(newName);
+
+// capitalizing names function
+
+const capitalizeName = function (name) {
+  const names = name.split(" "); // isimler bosluklar cikarilarak array'e atandi
+  const namesUpper = [];
+
+  for (const n of names) {
+    /*     namesUpper.push(n[0].toUpperCase() + n.slice(1)); // bas harfler buyutulerek yeni array'e push edildi. */
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(" ")); // join () ile string'e cevirildi
+};
+capitalizeName("esra discordia duman delibas");
+
+// Padding
+
+const message = "Go to gate 23!";
+console.log(message.padStart(20, "+").padEnd(30, "+"));
+console.log("Esra".padStart(20, "+").padEnd(30, "+"));
+
+// example function
+
+const maskCreditCard = function (number) {
+  const str = number + ""; // String()`in kisa yolu.
+  const last = str.slice(-4);
+  return last.padStart(str.length, "*"); // son 4 numaranin basina, gelen numaranin uzunlugu kadar * koy.
+}
+
+console.log(maskCreditCard(198239817498127));
+
+// Repeat
+
+const message2 = "Bad weather... All Departues Delayed... ";
+console.log(message2.repeat(5));
+
+// example function
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${"✈".repeat(n)}`);
+}
+
+planesInLine(3);
+
+
+
