@@ -263,4 +263,35 @@ GOOD LUCK �
  document.body.append(document.createElement('textarea'));
  document.body.append(document.createElement('button')); */
 
- 
+document.body.append(document.createElement("textarea"));
+document.body.append(document.createElement("button"));
+
+const button = document.querySelector("button");
+
+button.addEventListener("click", function () {
+  const textArea = document.querySelector("textarea").value;
+  const text = textArea.toLowerCase().split("\n").join(" ").trim().split(" ");
+  const newText = [];
+
+  for (const a of text) {
+    const [ilk, son] = a.split("_");
+    if (son) {
+      const iki = son[0].toUpperCase() + son.slice(1);
+      newText.push(ilk + iki);
+    }
+  }
+  let tickIndex = 0;
+  for (const tick of newText) {
+    tickIndex += 1;
+    console.log(`${tick.padEnd(20)}${"✅".repeat(tickIndex)}`);
+  }
+
+  /*   const text = textArea.split("\n");
+
+  for (const [i, val] of text.entries()) {
+    const [first, second] = val.toLowerCase().trim().split("_");
+    const sonuc = `${first}${second.replace(second[0], second[0].toUpperCase())}`;
+    console.log(`${sonuc.padEnd(20)}${"✅".repeat(i + 1)}`)
+  }
+ */
+});
