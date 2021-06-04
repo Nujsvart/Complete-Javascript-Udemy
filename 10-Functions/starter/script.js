@@ -318,3 +318,108 @@ document
 //! 5)
 poll.displayResults.call({ answers: [5, 2, 3] });
 poll.displayResults.call({ answers: [5, 2, 3] }, "string");
+
+console.log("✂".repeat(30));
+
+//! IMMEDIATELY INVOKED FUNCTION EXPRESSIONS (IIFE)
+
+//? function'a isim vermeden, parantezlerin icine alip, cagiriliyor.
+
+(function () {
+  console.log("This will never run again");
+})();
+
+//* Arrow function IIFE
+(() => console.log("This will ALSO never run again"))();
+
+console.log("✂".repeat(30));
+
+//! CLOSURES
+
+//? hardest javascript concept to understand :)
+
+//? A closure gives a function access to all variables of its parent function, even after that parent function has returned. The function keeps a reference to its outer scope, which preserves to scope chain throughout time.
+
+//? A closure makes sure that a function doesn't loose connection to variables that existed at the function's birth place;
+
+//? A closure is like a backpack that a function carries around wherever it goes. This backpack has all the variables that were present in the environment where the function was created.
+
+const secureBooking = function () {
+  let passengerCount = 0;
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+
+console.log("✂".repeat(30));
+
+//! MORE CLOSURE EXAMPLES
+
+//* Example 1
+
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();
+f();
+
+//? Re-assignin f function
+h();
+f();
+
+//* Example 2
+
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+boardPassengers(180, 3);
+
+//! Coding Challenge #2
+
+/* Coding Challenge #2
+This is more of a thinking challenge than a coding challenge �
+Your tasks:
+1. Take the IIFE below and at the end of the function, attach an event listener that
+changes the color of the selected h1 element ('header') to blue, each time
+the body element is clicked. Do not select the h1 element again!
+2. And now explain to yourself (or someone around you) why this worked! Take all
+the time you need. Think about when exactly the callback function is executed,
+  and what that means for the variables involved in this example. */
+
+(function () {
+  const header = document.querySelector("h1");
+  header.style.color = "red";
+  document.body.addEventListener("click", function () {
+    header.style.color = "blue";
+  });
+})();
+
+//? sayfa acilir acilmaz, yukaridaki IIFE fonksiyon calisti ve bitti. icindeki event listener fonksiyonu closure fonksiyon olarak, parentinin "header" variable'ini depoladi ve icindeki callback fonksiyon ile bu variable'a erisip degistirdi.
