@@ -63,131 +63,28 @@ const inputClosePin = document.querySelector(".form__input--pin");
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
-// LECTURES
 
-/* const currencies = new Map([
-  ["USD", "United States dollar"],
-  ["EUR", "Euro"],
-  ["GBP", "Pound sterling"],
-]);
- */
-/* const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]; */
+//! PROJECT: "Bankist" App
 
-/////////////////////////////////////////////////
+//* Creating DOM Elements
 
-//! SIMPLE ARRAY METHODS
+const diplayMovements = function (movements) {
+  containerMovements.innerHTML = "";
 
-//* slice()
-//? orjinal array'i bozmadan, yeni array donduruyor.
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? "deposit" : "withdrawal";
 
-let arr = ["a", "b", "c", "d", "e"];
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+        <div class="movements__value">${mov}</div>
+      </div>
+    `;
 
-console.log(arr.slice(2));
-console.log(arr.slice(2, 4));
-console.log(arr.slice(-2));
-console.log(arr.slice()); //? bos birakinca tum array'i kopyaliyor. spread op. gibi (chaining yaparken bunu kullanmak mantikli)
+    containerMovements.insertAdjacentHTML("afterbegin", html);
+  });
+};
 
-//* splice()
-//? orjinal array'i bozuyor. array'dan istemedigimiz elemanlari parametre vererek silmek icin kullanilir.
+diplayMovements(account1.movements);
 
-//console.log(arr.splice(2)); //? 2den basla hepsini sil.
-//console.log(arr); //? splice edilen elemanlar, orjinal array'den silindi.
-
-arr.splice(1, 2); //? 1'den basla 2'yi dahil ederek sil.
-console.log(arr);
-
-//* reverse()
-//? orjinal array'i bozuyor.
-
-arr = ["a", "b", "c", "d", "e"];
-const arr2 = ["j", "i", "h", "g", "f"];
-
-console.log(arr2.reverse());
-console.log(arr2);
-
-//* concat()
-
-const letters = arr.concat(arr2);
-console.log(letters);
-console.log([...arr, ...arr2]); //? aynisi
-
-//* join()
-//? verilen parametreyi elemanlarin arasina ekleyerek array'i string'e ceviriyor.
-
-console.log(letters.join(" - "));
-
-console.log("✂".repeat(40));
-
-//! LOOPING ARRAYS: forEach
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-//? for of ornegi:
-
-for (const movement of movements) {
-  if (movement > 0) {
-    console.log(`You deposited ${movement}`);
-  } else {
-    console.log(`You withdrew ${Math.abs(movement)}`);
-  }
-}
-
-//? forEach ornegi:
-console.log("-----FOR EACH------");
-
-movements.forEach(function (movement) {
-  if (movement > 0) {
-    console.log(`You deposited ${movement}`);
-  } else {
-    console.log(`You withdrew ${Math.abs(movement)}`);
-  }
-});
-
-//**************************************************************** */
-
-console.log("------INDEX-------");
-
-//* her iki method ile indexlere erismek
-
-for (const [i, movement] of movements.entries()) {
-  if (movement > 0) {
-    console.log(`You deposited ${i + 1} ${movement}`);
-  } else {
-    console.log(`You withdrew ${i + 1} ${Math.abs(movement)}`);
-  }
-}
-
-console.log("-----FOR EACH------");
-
-//? forEach callback function'u sirasiyla 3 parametre aliyor. hepsini kullanmak zorunda degiliz. (1-value, 2-index, 3-array)
-
-movements.forEach(function (movement, index, array) {
-  if (movement > 0) {
-    console.log(`You deposited ${index + 1} ${movement}`);
-  } else {
-    console.log(`You withdrew ${index + 1} ${Math.abs(movement)}`);
-  }
-});
-
-console.log("✂".repeat(40));
-
-//! ForEach with Maps and Sets
-
-//* Map
-const currencies = new Map([
-  ["USD", "United States dollar"],
-  ["EUR", "Euro"],
-  ["GBP", "Pound sterling"],
-]);
-
-currencies.forEach(function (value, key, map) {
-  console.log(`${key}: ${value}`);
-});
-
-//* Set
-const currenciesUnique = new Set(["USD", "GBP", "USD", "EUR", "EUR"]);
-console.log(currenciesUnique);
-
-currenciesUnique.forEach(function (value) {
-  console.log(`${value}`);
-});
+//? .insertAdjacentHTML(position, value) : template literal ile bir html stringi olusturup, value olarak verildiginde o html elementini ekliyor.
