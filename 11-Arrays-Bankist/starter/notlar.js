@@ -172,3 +172,180 @@ const checkDogs = function (dogsJulia, dogsKate) {
 };
 
 checkDogs(Julia, Kate);
+
+console.log("✂".repeat(40));
+
+//! DATA TRANSFORMATIONS: map(), filter(), reduce()
+
+//? donusturulmus yeni arrayler uretiyorlar
+//? return
+//? for loop ile yapilamayan chaining islemi yapilabilir.
+
+//* map()
+
+//? forEach e benzior ama farkli olarak o array'den yeni bir array uretiyor
+//? her iteration'da aldigi function'in icerdigi koda gore islem yapior
+//? map returns a new array containing the results of applying an operation on all original array elements
+
+//* filter()
+
+//? orjinal array'deki elemanlari function'da belirtilmis kosula gore filter edior.
+//? mesela array'de 2'den buyuk elemanlar: current > 2
+//? filter returns a new array containing the array elements that passed a specified test coindition
+
+//* reduce()
+
+//? dizinin her bir elemani icin, parametre olarak verilen callback fonksiyon dizinin tum elemanlarina methodta belirtilen islemi yapar ve TEK CIKTILI bir sonuc olusturur.
+//? accumulator: toplayici, geri aramanin donus degelerlerini toplar
+//? currentValue: gereklidir. mevcur elemanin degeri
+//? currentIndex: istege bagli. gecerli elemanin dizi indexi.
+//? arr: istege bagli. gecerli elemanin ait oldugu dizi nesnesi
+
+//? reduce boils ("reduces") all array elements down to one single value (adding all elemnents together)
+
+//! THE MAP METHOD
+
+const eurToUSD = 1.1;
+
+const movementsUSD = movements.map(function (mov) {
+  return mov * eurToUSD;
+});
+
+console.log(movements);
+console.log(movementsUSD);
+
+//? arrow function ile:
+
+const movementsArrow = movements.map(mov => mov * eurToUSD);
+console.log(movementsArrow);
+
+//? for of ile:
+
+const newARR = [];
+for (mov of movements) {
+  newARR.push(mov * eurToUSD);
+}
+console.log(newARR);
+
+//? diger parametrelerle birlikte kullanim :
+
+const movementsDescriptions = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? "deposited" : "withdrew"} ${Math.abs(
+      mov
+    )} `
+);
+
+/* {
+  if (mov > 0) {
+    return `Movement ${i + 1}: You deposited ${mov}`;
+  } else {
+    return `Movement ${i + 1}: You withdrew ${Math.abs(mov)}`;
+  }
+} */
+
+console.log(movementsDescriptions);
+
+console.log("✂".repeat(40));
+
+//! THE FILTER METHOD
+
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+
+console.log(movements);
+console.log(deposits);
+
+const withdrawals = movements.filter(mov => mov < 0);
+
+console.log(withdrawals);
+
+//? for of ornegi:
+
+const depositOf = [];
+for (const mov of movements) {
+  if (mov > 0) {
+    depositOf.push(mov);
+  }
+}
+console.log(depositOf);
+
+console.log("✂".repeat(40));
+
+//! THE REDUCE METHOD
+
+console.log(movements);
+
+//? returns one single value, not an array
+//? accumulator --> SNOWBALL
+//? callback function sonrasi, parametre olarak, acc'in ilk iteration'da baslayacak degerini aliyor. asagidaki ornekte : 0
+
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  console.log(`Iteration ${i}: ${acc}`);
+  return acc + cur;
+}, 0);
+
+console.log(balance);
+
+//? arrow function ornegi:
+
+const balanceArrow = movements.reduce((acc, mov) => acc + mov, 0);
+console.log(balanceArrow);
+
+//? for of ornegi:
+
+let total = 0;
+
+for (const [i, mov] of movements.entries()) {
+  total += mov;
+  console.log(`Iteration ${i}: ${total}`);
+}
+console.log(total);
+
+// Maximum value exercise
+
+const maxVal = movements.reduce(function (acc, mov) {
+  return mov > acc ? mov : acc;
+}, movements[0]);
+
+console.log(maxVal);
+
+console.log("✂".repeat(40));
+
+//! Coding Challenge #2
+
+/* Coding Challenge #2
+Let's go back to Julia and Kate's study about dogs. This time, they want to convert
+dog ages to human ages and calculate the average age of the dogs in their study.
+Your tasks:
+Create a function 'calcAverageHumanAge', which accepts an arrays of dog's
+ages ('ages'), and does the following things in order:
+1. Calculate the dog age in human years using the following formula: if the dog is
+<= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old,
+humanAge = 16 + dogAge * 4
+2. Exclude all dogs that are less than 18 human years old (which is the same as
+keeping dogs that are at least 18 years old)
+3. Calculate the average human age of all adult dogs (you should already know
+from other challenges how we calculate averages �)
+4. Run the function for both test datasets
+Test data:
+§ Data 1: [5, 2, 4, 1, 15, 8, 3]
+§ Data 2: [16, 6, 10, 5, 6, 1, 4]
+ */
+
+const calcAverageHumanAge = function (ages) {
+  const humanAge = ages.map(age => (age <= 2 ? age * 2 : 16 + age * 4));
+  console.log(humanAge);
+  const adultDogs = humanAge.filter(age => age >= 18);
+  console.log(adultDogs);
+  const avarageHumanAge = adultDogs.reduce(function (acc, cur) {
+    return acc + cur / adultDogs.length;
+  }, 0);
+  console.log(avarageHumanAge);
+};
+
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+console.log("✂".repeat(40));
