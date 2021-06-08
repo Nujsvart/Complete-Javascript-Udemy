@@ -349,3 +349,34 @@ calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 
 console.log("✂".repeat(40));
+
+//! THE MAGIC OF CHAINING METHODS
+
+//? we can only chain a method after another one, if the first one returns an array.
+
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUSD)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);
+
+console.log("✂".repeat(40));
+//! Coding Challenge #3
+
+/* Coding Challenge #3
+Rewrite the 'calcAverageHumanAge' function from Challenge #2, but this time
+as an arrow function, and using chaining!
+Test data:
+§ Data 1: [5, 2, 4, 1, 15, 8, 3]
+§ Data 2: [16, 6, 10, 5, 6, 1, 4] */
+
+const calcArrow = ages =>
+  ages
+    .map(age => (age <= 2 ? age * 2 : 16 + age * 4))
+    .filter(adult => adult >= 18)
+    .reduce((acc, average, i, arr) => acc + average / arr.length, 0);
+
+const avg1 = calcArrow([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcArrow([16, 6, 10, 5, 6, 1, 4]);
+console.log(avg1, avg2);
