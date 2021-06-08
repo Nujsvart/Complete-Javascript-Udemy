@@ -66,9 +66,9 @@ const inputClosePin = document.querySelector(".form__input--pin");
 
 //! PROJECT: "Bankist" App
 
-//* Creating DOM Elements
+//! Creating DOM Elements
 
-const diplayMovements = function (movements) {
+const displayMovements = function (movements) {
   containerMovements.innerHTML = "";
 
   movements.forEach(function (mov, i) {
@@ -87,11 +87,9 @@ const diplayMovements = function (movements) {
   });
 };
 
-diplayMovements(account1.movements);
-
 //? .insertAdjacentHTML(position, value) : template literal ile bir html stringi olusturup, value olarak verildiginde o html elementini ekliyor.
 
-//* Computing Usernames
+//! Computing Usernames
 
 const createUserNames = function (accs) {
   accs.forEach(function (acc) {
@@ -106,34 +104,98 @@ const createUserNames = function (accs) {
 createUserNames(accounts);
 console.log(accounts);
 
-//* Calculating and displaying balance
+//? hepsini tek bir fonksiyonda topladik
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}£`;
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+  // Display balance
+  calcDisplayBalance(acc);
+  // Display summary
+  calcDisplaySummary(acc);
 };
 
-calcDisplayBalance(account1.movements);
+//! Calculating and displaying balance
 
-//* Calculating the statics
+const calcDisplayBalance = function (account) {
+  account.balance = account.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${account.balance}£`;
+};
 
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+//! Calculating the statics
+
+const calcDisplaySummary = function (account) {
+  const incomes = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}£`;
 
-  const out = movements
+  const out = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(out)}£`;
 
-  const interests = movements
+  const interests = account.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interests}£`;
 };
 
-calcDisplaySummary(account1.movements);
+//! Implementing Login
+
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener("click", function (e) {
+  // Prevent form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.userName === inputLoginUsername.value
+  );
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(" ")[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = "";
+    inputLoginPin.blur(); //? focus`u kaldirdik
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+});
+
+//! Implementing Transfers
+
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.userName === inputTransferTo.value
+  );
+
+  inputTransferAmount.value = inputTransferTo.value = "";
+  inputTransferAmount.blur();
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    amount <= currentAccount.balance &&
+    receiverAcc?.userName !== currentAccount.userName
+  ) {
+    // Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+});

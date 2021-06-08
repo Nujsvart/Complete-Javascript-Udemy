@@ -380,3 +380,27 @@ const calcArrow = ages =>
 const avg1 = calcArrow([5, 2, 4, 1, 15, 8, 3]);
 const avg2 = calcArrow([16, 6, 10, 5, 6, 1, 4]);
 console.log(avg1, avg2);
+
+console.log("✂".repeat(40));
+
+//! THE FIND METHOD
+
+//? filter'dan farkli olarak yeni bir array dondurmuyor. kosula gore buldugu ilk elementi donduruyor.
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === "Jessica Davis");
+console.log(account);
+
+//? for of ornegi:
+
+for (const acc of accounts) {
+  if (acc.owner === "Jessica Davis") {
+    console.log(acc);
+  }
+}
