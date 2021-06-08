@@ -404,3 +404,13 @@ for (const acc of accounts) {
     console.log(acc);
   }
 }
+
+console.log("✂".repeat(40));
+
+//! THE findIndex METHOD
+
+//? find'dan farkli olarak buldugu elementi degil indexi getiriyor.
+//? bankist clossing account kisminda ornek mevcut.
+
+//! some and every METHODS
+
