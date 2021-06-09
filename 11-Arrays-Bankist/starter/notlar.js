@@ -414,3 +414,70 @@ console.log("✂".repeat(40));
 
 //! some and every METHODS
 
+console.log(movements);
+
+//? includes'dan farkli olarak, includes verilen parametrenin aynisina uyan bir element var mi diye bakarken, some aldigi callback function'da yazilan kosula gore arama yapip boolean sonuc donduruyor.
+
+//? EQUALITY
+console.log(movements.includes(-130));
+
+//* SOME: CONDITION
+console.log(movements.some(mov => mov === -130)); // aynisi
+//? equality icin includes kullanmak daha mantikli.
+
+//? some -> hic kosula uyan var mi?
+const anyDeposits = movements.some(mov => mov > 0); // true
+console.log(anyDeposits);
+
+//* EVERY
+//? every -> hepsi kosula uyuyor mu?
+//? some'dan farkli olarak every array'deki tum elementler kosula uyuyorsa true donduruyor.
+
+console.log(movements.every(mov => mov > 0)); // false
+
+//* Separate callback
+
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+
+console.log("✂".repeat(40));
+
+//! flat and flatMap METHODS
+
+const arrF = [[1, 2, 3], [4, 5, 6], 7, 8];
+
+//* FLAT: icice gecmis bir arayi tek bir array'de birlestirmek icin kullanilir.
+console.log(arrF.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2)); //? lvl 2 parametre verilerek birlestirildi.
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+
+const overalBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+//? chaining ile:
+
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overallBalance);
+
+//* flatMap: flat() ile map() i tek bir methodda kombine ediyor.
+//? aslinda islemin sonunda flat eden bir map methodu.
+//? sadece one level deep gidebilir. daha derin bir flat islemi icin flat(4) kullanilmasi gerekir.
+
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overallBalance2);
