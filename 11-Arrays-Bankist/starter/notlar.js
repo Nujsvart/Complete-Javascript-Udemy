@@ -481,3 +481,180 @@ const overallBalance2 = accounts
   .reduce((acc, mov) => acc + mov, 0);
 
 console.log(overallBalance2);
+
+console.log("✂".repeat(40));
+
+//! SORTING ARRAYS: sort()
+
+//* Strings
+
+const owners = ["Jonas", "Zach", "Adam", "Martha"];
+console.log(owners.sort());
+//? orjinal array'i mutate ediyor.
+console.log(owners);
+
+//* Numbers
+console.log(movements);
+
+/* movements.sort((a, b) => {
+  if (a > b) return 1;
+  if (a < b) return -1;
+}); */
+//******************* */
+/* movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (a < b) return 1;
+}); */
+
+//? return < 0, A, B (keep order)
+//? return > 0, B, A (switch order)
+
+//* Ascending (kucukten buyuge dogru)
+
+movements.sort((a, b) => a - b);
+//? a, b den buyukse pozitif rakamdir. kucukse negatif rakamdir.
+console.log(movements);
+
+//* Descending (buyukten kucuge dogru)
+
+movements.sort((a, b) => b - a);
+
+console.log(movements);
+
+console.log("✂".repeat(40));
+
+//! MORE WAYS OF CREATING AND FILLING ARRAYS
+
+//* fill()
+
+const x = new Array(7); //? 7 uzunlugunda array yarattik
+x.fill(1); //? tamamini 1 ile doldurduk.
+console.log(x);
+
+const arrS = [1, 2, 3, 4, 5, 6, 7];
+arrS.fill(23, 2, 6); //? burda slice() gibi mutate ediyor.
+console.log(arrS);
+
+//* Array.from()
+
+//? parametre olarak {length: }, map callback
+
+const y = Array.from({ length: 7 }, () => 1); //? hepsini 1 ile dolrdu.
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1); //? [1,2,3,4,5,6,7]
+console.log(z);
+
+//? Exercise: 100 adet random rakam iceren array - 1den 100e kadar
+
+const randomArray = Array.from(
+  { length: 100 },
+  () => Math.trunc(Math.random(1) * 100) + 1
+);
+console.log(randomArray);
+
+//* Array.from() ile UI'dan movements cekip, array'e donusturmek:
+//? ilk parametre olarak donusturulecek obje, ikinci parametre map
+
+//? balance etiketine tiklandiginda, ui'dan belirtilen class'daki tum verileri isaretleyip, sonundaki £ isaretini kaldirip ARRAY'e donusturduk.
+//? querySelectorAll() array'e benzeyen bir nodeList dondurdugu icin, kolaylikla Array.from() ile gercek array'e donusturulebiliyor.
+
+labelBalance.addEventListener("click", function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll(".movements__value"),
+    el => Number(el.textContent.replace("£", ""))
+  );
+  console.log(movementsUI);
+});
+
+//? destructuring ile de ayni islem yapilabilir. fakat map methodu ayri yazilmasi gerekior.
+
+const movementsUI2 = [...document.querySelectorAll(".movements__value")].map(
+  el => el.textContent.replace("€", "")
+);
+
+console.log(movementsUI2);
+
+console.log("✂".repeat(40));
+
+//! WHICH ARRAY METHOD TO USE?
+
+//* Want to mutate original array
+
+// Add to original:
+//? .push(), unshift()
+
+// Remove from original:
+//? pop(), shift(), splice()
+
+// Others:
+//? reverse(), sort(), fill()
+
+//************************************************************ */
+
+//* Want a new array
+
+// Computed from original:
+//? map() (loop)
+
+// Filtered using coindition:
+//? filter()
+
+// Portion of original:
+//? slice()
+
+// Adding original to other:
+//? concat()
+
+// Flattening the original:
+//? flat(), flatMap()
+
+//************************************************************ */
+
+//* Want an array index
+
+// Based on value:
+//? indexOf()
+
+// Based on test condition:
+//? findIndex()
+
+//************************************************************ */
+
+//* Want an array element
+
+// Based on test condition:
+//? find()
+
+//************************************************************ */
+
+//* Want to know if array includes
+
+// Based on value:
+//? includes()
+
+// Based on test condition:
+//? some(), every()
+
+//************************************************************ */
+
+//* Want a new string
+
+// Based on separator string:
+//? join()
+
+//************************************************************ */
+
+//* Want to transform to value
+
+// Based on accumulator:
+//? reduce()
+//? Boil down array to single value of any type: number, string, boolean, or even new array or object
+
+//************************************************************ */
+
+//* Want to just loop array
+
+// Based on callback:
+//? forEach()
+//? Does not create a new array, just loops over it
