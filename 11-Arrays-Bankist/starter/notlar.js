@@ -658,3 +658,69 @@ console.log("✂".repeat(40));
 // Based on callback:
 //? forEach()
 //? Does not create a new array, just loops over it
+
+//************************************************************ */
+
+//! ARRAY METHODS PRACTICE
+
+console.log(accounts);
+
+//? 1. array'deki pozitif sayilarin toplamini bul.
+
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(pos => pos > 0)
+  .reduce((acc, cur) => acc + cur, 0);
+
+console.log(bankDepositSum);
+
+//? 2. array'de en az 1000 olan depozitlerin kac tane oldugunu bul
+
+const numDeposits10001 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(pos => pos >= 1000).length;
+
+console.log(numDeposits10001);
+
+// reduce ile yapimi:
+
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, cur) => (cur >= 1000 ? acc + 1 : acc), 0);
+
+console.log(numDeposits1000);
+
+//? 3. depositlerin toplamini ve withdrawlarin toplamini iceren obje yarat
+
+const sums = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (acc, cur) => {
+      cur > 0 ? (acc.deposits += cur) : (acc.withdrawals += cur);
+      return acc;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(sums);
+
+//? 4.
+// this is a nice title -> This Is a Nice Title
+
+const convertTitleCase = title => {
+  const exceptions = ["a", "an", "and", "the", "but", "or", "on", "in", "with"];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(" ")
+    .map(word =>
+      exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
+    )
+    .join(" ");
+
+  return titleCase;
+};
+
+console.log(convertTitleCase("this is a nice title"));
+console.log(convertTitleCase("this is a LONG title but not too long"));
+console.log(convertTitleCase("and here is another title with an EXAMPLE"));
