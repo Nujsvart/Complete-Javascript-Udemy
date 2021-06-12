@@ -173,3 +173,35 @@ future.setFullYear(2040);
 console.log(future);
 
 console.log("✂".repeat(40));
+
+//! OPERATIONS WITH DATES
+
+const future2 = new Date(2037, 10, 19, 15, 23);
+console.log(+future2);
+
+/* const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 24));
+console.log(days1); */
+
+//? moment.js
+
+console.log("✂".repeat(40));
+
+//! INTERNATIONALIZING NUMBERS (Intl API)
+
+const numZ = 3884764.23;
+
+const optionsZ = {
+  style: "currency",
+  currency: "USD",
+  /* unit: "celcius", */
+};
+
+console.log("US:  ", new Intl.NumberFormat("en-US", optionsZ).format(numZ));
+console.log(
+  "Germany:  ",
+  new Intl.NumberFormat("de-DE", optionsZ).format(numZ)
+);
+console.log(
+  navigator.language,
+  new Intl.NumberFormat(navigator.language, optionsZ).format(numZ)
+);
