@@ -139,8 +139,8 @@ console.log("✂".repeat(40));
 
 //? Create a date / 4 ways
 
-const now = new Date();
-console.log(now);
+const now1 = new Date();
+console.log(now1);
 
 console.log(new Date("Jun 11 2021 23:37:42"));
 
@@ -171,3 +171,5 @@ console.log(Date.now()); // su anin timestamp'i
 
 future.setFullYear(2040);
 console.log(future);
+
+console.log("✂".repeat(40));
