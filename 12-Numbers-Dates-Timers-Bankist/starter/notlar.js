@@ -205,3 +205,43 @@ console.log(
   navigator.language,
   new Intl.NumberFormat(navigator.language, optionsZ).format(numZ)
 );
+
+console.log("✂".repeat(40));
+
+//! TIMERS: setTimeout and setInterval
+
+//* setTimeout(callback, seconds) 1000 - 1 sc
+//? callback fonksiyonu belirtilen sure sonrasinda calistirmak icin kullanilir. callback sadece bir kere calisir.
+
+setTimeout(() => console.log("Here is your pizza 🍕"), 3000);
+console.log("Waiting...");
+
+//? Parametre ve argumanlarla birlikte kullanimi :
+
+setTimeout(
+  (ing1, ing2) => console.log(`Here is your pizza with 🍕 ${ing1} and ${ing2}`),
+  3000,
+  "olives",
+  "spinach"
+);
+
+//? clearTimeout ile birlikte kullanimi:
+
+const ingredients = ["olives", "spinach"];
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`Here is your pizza with 🍕 ${ing1} and ${ing2}`),
+  3000,
+  ...ingredients
+);
+
+//? clearTimeout(setTimeout)
+
+if (ingredients.includes("spinach")) clearTimeout(pizzaTimer);
+
+//* setInterval(callback, seconds)
+//? callback fonskiyonu belirtilen sure icin surekli calistirmak icin kullanilir. mesela her 5 saniyede bir setInterval(callback, 5000)
+
+/* setInterval(function () {
+  const now = new Date();
+  console.log(`${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+}, 1000); */

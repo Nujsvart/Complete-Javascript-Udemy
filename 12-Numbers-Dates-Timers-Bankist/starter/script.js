@@ -111,6 +111,39 @@ const formatCur = function (value, locale, currency) {
   }).format(value);
 };
 
+//! Creating Timer
+
+const startLogOutTimer = function () {
+  // Set time to 5 minutes
+
+  let time = 120;
+
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(Math.trunc(time % 60)).padStart(2, 0);
+
+    // In each call, print the remaining time to UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When 0 seconds, stop timer and log out the user
+    if (time === 0) {
+      clearInterval(timer);
+      //Hide UI
+      containerApp.style.opacity = 0;
+      labelWelcome.textContent = `Log in to get started`;
+    }
+
+    // Decrease 1 second
+    time--;
+  };
+
+  // Call the timer every second
+  tick(); //? baslangicta bir kere calistirip fonksiyonu bitiriyoruz
+  const timer = setInterval(tick, 1000); //? sonrasidna her 1 saniyede calisiyor.
+
+  return timer;
+};
+
 //! Creating DOM Elements
 
 const displayMovements = function (acc, sort = false) {
@@ -212,8 +245,8 @@ const calcDisplaySummary = function (account) {
 
 //! Implementing Login
 
-// Event handler
-let currentAccount;
+//! Event handlers
+let currentAccount, timer;
 
 btnLogin.addEventListener("click", function (e) {
   // Prevent form from submitting
@@ -263,6 +296,10 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.blur(); //? focus`u kaldirdik
 
+    //! Timer
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer(); //? timer'i calistirdik
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -297,6 +334,10 @@ btnTransfer.addEventListener("click", function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    //! Reset timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -308,15 +349,21 @@ btnLoan.addEventListener("click", function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    //! Timeout
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
+  //! Reset timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
   inputLoanAmount.value = "";
 });
 
