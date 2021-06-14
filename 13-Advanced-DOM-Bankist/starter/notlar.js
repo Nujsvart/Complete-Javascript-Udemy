@@ -47,3 +47,59 @@ document
   });
 
 console.log("✂".repeat(30));
+
+//! STYLES, ATTRIBUTES AND CLASSES
+
+//* STYLES
+
+message.style.backgroundColor = "#37383d";
+message.style.width = "107%";
+
+console.log(message.style.color); //? css dosyasinda tanimlanmis degere erisilemiyor.
+
+/* console.table(getComputedStyle(message)); */ //? css dosyasinda message elementine tanimlanmis tum stilleri gosteren fonksiyon.
+console.log(getComputedStyle(message).color); //? sadece color.
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px"; //? css de tanimlanmis heighti alip ustune ekledik.
+
+//* css dosyasinda tanimlanmis variable'in degerini degistirmek:
+//* document.documentElement ==> :root
+
+document.documentElement.style.setProperty("--color-primary", "orangered"); //? --color-primary var'i orangered yapildi.
+
+//* ATTRIBUTES
+
+const logo = document.querySelector(".nav__logo");
+console.log(logo.alt); //? alt attribute'una erismek
+console.log(logo.src); //? src attribute'u
+console.log(logo.className); //? class attr
+
+logo.alt = "Beautiful minimalist logo";
+
+logo.setAttribute("company", "Bankist"); //? company adinda attr yaratip bankist valuesi verildi.
+console.log(logo.getAttribute("company")); //? bankist
+
+console.log(logo.src); //? absolute URL
+console.log(logo.getAttribute("src")); //? relative URL
+
+const link = document.querySelector(".twitter-link");
+
+console.log(link.href);
+console.log(link.getAttribute("href")); //? ikisi de absolute URL
+
+//* Data attributes
+
+console.log(logo.dataset.versionNumber); //? data-version-number attr. (dataset objesinin icinde) UI'da html kodunda data store etmek icin kullanilir.
+
+//* CLASSES
+
+logo.classList.add("c", "j"); //? class ekle
+logo.classList.remove("c", "j"); //? class sil
+logo.classList.toggle("c"); //? class goster/kapat
+logo.classList.contains("c"); //? class icerior mu?
+
+//? bunu kullanma! yukaridakileri kullan.
+/* logo.className = 'kullanma'; */
+
+console.log("✂".repeat(30));
