@@ -28,7 +28,7 @@ message.classList.add("cookie-message"); //? class ekledik
 message.innerHTML = `We use cookies for improved functionality and analytics. <button class ="btn btn--close-cookie">Got it!</button>`; //? innerHTML ile html kodu yazilabilir.
 
 /* header.prepend(message); */ //? prepend first child olarak ekler
-header.append(message); //? append last child olarak ekler
+/* header.append(message); */ //? append last child olarak ekler
 //? bu iki method eklemek disinda elementleri oynatmak icin de kullanilir.
 //? ayni zamanda sadece bir tanesi gecerli olacaktir.
 
@@ -40,11 +40,11 @@ header.append(message); //? append last child olarak ekler
 //* Delete elements
 // remove()
 
-document
+/* document
   .querySelector(".btn--close-cookie")
   .addEventListener("click", function () {
     message.remove();
-  });
+  }); */
 
 console.log("✂".repeat(30));
 
@@ -66,7 +66,7 @@ message.style.height =
 //* css dosyasinda tanimlanmis variable'in degerini degistirmek:
 //* document.documentElement ==> :root
 
-document.documentElement.style.setProperty("--color-primary", "orangered"); //? --color-primary var'i orangered yapildi.
+/* document.documentElement.style.setProperty("--color-primary", "orangered"); */ //? --color-primary var'i orangered yapildi.
 
 //* ATTRIBUTES
 
@@ -103,3 +103,54 @@ logo.classList.contains("c"); //? class icerior mu?
 /* logo.className = 'kullanma'; */
 
 console.log("✂".repeat(30));
+
+//! IMPLEMENTING SMOOTH SCROLLING
+
+/* const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1"); */
+
+//? getBoundingClientRect() uygulandigi elementin viewporta gore koordinatlarini aliyor.
+
+/* btnScrollTo.addEventListener("click", function (e) { */
+/* const s1coords = section1.getBoundingClientRect(); */
+//? section1'in koordinatlari:
+/* console.table(s1coords); */
+
+//? button'un koordinatlari:
+/* console.table(e.target.getBoundingClientRect()); */
+
+//? tum html dokumanina gore, yukardan 0, left 0 baslayarak hesaplanan koordinat:
+/* console.log("Current scroll (X,Y)", window.pageXOffset, window.pageYOffset); */
+
+//? sayfanin viewport'a gore hesaplanan yukseklik ve genisligi
+/* console.log(
+    "height/width viewport",
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+ */
+//* Scrolling
+
+//! Eski yontem ile hesaplayarak yapmak:
+
+//? scrollTo(left koord, top koord)
+//? hesaplanmasi: section1'in left ve top koordinatlari + html'e gore hesaplanan koordinatlar.
+/*   window.scrollTo(
+    s1coords.left + window.pageXOffset,
+    s1coords.top + window.pageYOffset
+  ); */
+
+//? smooth scrolling (behavior)
+
+/*   window.scrollTo({
+    left: s1coords.left + window.pageXOffset,
+    top: s1coords.top + window.pageYOffset,
+    behavior: "smooth",
+  }); */
+
+//! Modern yontem:
+//? element.scrollIntoView({behavior: "smooth"})
+//? hesaplamaya gerek yok.
+
+/* section1.scrollIntoView({ behavior: "smooth" }); */
+/* }); */
