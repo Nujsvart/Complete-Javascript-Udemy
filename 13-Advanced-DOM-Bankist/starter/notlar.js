@@ -154,3 +154,35 @@ const section1 = document.querySelector("#section--1"); */
 
 /* section1.scrollIntoView({ behavior: "smooth" }); */
 /* }); */
+
+console.log("✂".repeat(30));
+
+//! TYPES OF EVENTS AND EVENT HANDLERS
+
+//? mouseenter --> :hover
+
+const h1 = document.querySelector("h1");
+
+/* h1.addEventListener("mouseenter", function (e) {
+  alert("addEventListener: Great! You are reading the heading :D");
+}) */
+
+//? event listener olusturduktan sonra, onu birkez kullanip devredisi birakmak icin: removeEventListener iceren callback'i disarda tanimladiktan sonra arguman olarak verilir.
+
+const alertH1 = function (e) {
+  alert("Great! You are reading the heading :D");
+
+  h1.removeEventListener("mouseenter", alertH1);
+};
+
+h1.addEventListener("mouseenter", alertH1);
+
+//? belli bir zaman sonra remove etmek icin :
+
+// setTimeout(() => h1.removeEventListener("mouseenter", alertH1), 3000);
+
+//? MDN events javascript
+
+console.log("✂".repeat(30));
+
+//! EVENT PROPAGATION: BUBBLING AND CAPTURING PRACTICE
