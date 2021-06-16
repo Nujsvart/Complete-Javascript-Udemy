@@ -161,7 +161,7 @@ console.log("✂".repeat(30));
 
 //? mouseenter --> :hover
 
-const h1 = document.querySelector("h1");
+// const h1 = document.querySelector("h1");
 
 /* h1.addEventListener("mouseenter", function (e) {
   alert("addEventListener: Great! You are reading the heading :D");
@@ -219,6 +219,43 @@ document.querySelector(".nav").addEventListener("click", function (e) {
 
 console.log("✂".repeat(30));
 
-//! EVENT DELEGATION: IMPLEMENTING PAGE NAVIGATION
+//! DOM TRAVERSING
 
+const h1 = document.querySelector("h1");
 
+//* Going downwards: child
+
+console.log(h1.querySelectorAll(".highlight")); //? h1 elementinin .hightlight classina sahip childlari secildi. h1 > .hightlight gibi
+
+console.log(h1.childNodes); //? nodeList donduruyor. tum gereksiz nodelari da icerior.
+
+console.log(h1.children); //? htmlCollection. sadece child olan elementler.
+
+console.log(h1.firstElementChild); //? h1'in ilk child elementi
+console.log(h1.lastElementChild); //? h1'in son child elementi
+
+//* Going upwards : parents
+
+console.log(h1.parentNode); //? h1'in parenti
+console.log(h1.parentElement); //? h1'in parenti. bunu kullan
+
+//? closest() -- important
+
+console.log(h1.closest(".header")); //? h1'e en yakin olan .header classli element
+
+// h1.closest(".header").style.background = "var(--gradient-secondary)";
+
+// h1.closest("h1").style.background = "var(--gradient-primary)"; //? h1'e en yakin olan h1 kendisi.
+
+//* Going sideways : siblings
+
+console.log(h1.previousElementSibling); //? h1'in kendinden once gelen kardes elementi.
+console.log(h1.nextElementSibling); //? h1'in kendinden sonra gelen kardes elementi
+
+console.log(h1.parentElement.children); //? h1'in tum kardes elementleri. oncne h1'in parentini secip, o parentin tum cocuk elementlerini yazdirdik.
+
+//? htmlCollection'u array'e cevirip forEach kullanabiliriz:
+
+/* [...h1.parentElement.children].forEach(el =>
+  el !== h1 ? (el.style.transform = "scale(0.5)") : el
+); */
