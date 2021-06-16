@@ -169,13 +169,13 @@ const h1 = document.querySelector("h1");
 
 //? event listener olusturduktan sonra, onu birkez kullanip devredisi birakmak icin: removeEventListener iceren callback'i disarda tanimladiktan sonra arguman olarak verilir.
 
-const alertH1 = function (e) {
+/* const alertH1 = function (e) {
   alert("Great! You are reading the heading :D");
 
   h1.removeEventListener("mouseenter", alertH1);
 };
 
-h1.addEventListener("mouseenter", alertH1);
+h1.addEventListener("mouseenter", alertH1); */
 
 //? belli bir zaman sonra remove etmek icin :
 
@@ -186,3 +186,39 @@ h1.addEventListener("mouseenter", alertH1);
 console.log("✂".repeat(30));
 
 //! EVENT PROPAGATION: BUBBLING AND CAPTURING PRACTICE
+
+//? random color:
+// rgb(255,255,255)
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+/* console.log(randomColor());
+ */
+
+/* document.querySelector(".nav__link").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+  //? Stop propagation
+  // e.stopPropagation();
+});
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+});
+
+document.querySelector(".nav").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+
+});
+ */
+//? en icteki element tum parentlerinin AYNI tanimlanmis eventini calistiriyor.
+//? e.stopPropagation() ile bu onlenebiliyor.
+
+console.log("✂".repeat(30));
+
+//! EVENT DELEGATION: IMPLEMENTING PAGE NAVIGATION
+
+
