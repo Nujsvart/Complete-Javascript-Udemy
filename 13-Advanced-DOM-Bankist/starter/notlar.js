@@ -259,3 +259,20 @@ console.log(h1.parentElement.children); //? h1'in tum kardes elementleri. oncne 
 /* [...h1.parentElement.children].forEach(el =>
   el !== h1 ? (el.style.transform = "scale(0.5)") : el
 ); */
+
+//! Implementing a Sticky Navigation: The Scroll Event
+
+// const initialCoords = section1.getBoundingClientRect(); //? sticky classinin nerede baslayacagi koordinat bilgisini aldik. > section1
+
+// console.log(initialCoords); //? bottom,height,left,right,top,width,x,y
+
+//? scroll event'i window objesinde bulunur. document'de degil
+
+/* window.addEventListener("scroll", function () {
+  window.scrollY > initialCoords.top
+    ? nav.classList.add("sticky")
+    : nav.classList.remove("sticky");
+}); */
+
+//? scroll isaretledigimiz yeri gectigi anda sticky devreye giriyor.
+//? Bu yontem performans icin kullanissiz.
