@@ -9,8 +9,8 @@ console.log(document.head); //? head
 console.log(document.body); //? body
 
 //const header = document.querySelector(".header"); //? .header'la uyusan ilk element
-const allSections = document.querySelectorAll(".section"); //? section'la uyusan tum elementler
-console.log(allSections); //? NodeList olarak donuyor
+//const allSections = document.querySelectorAll(".section"); //? section'la uyusan tum elementler
+//console.log(allSections); //? NodeList olarak donuyor
 
 document.getElementById("section--1"); //? id'ye gore
 
@@ -328,3 +328,5 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 
 headerObserver.observe(header); */
+
+

@@ -147,3 +147,26 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 //? Hedef belirleyip izlemek:
 
 headerObserver.observe(header);
+
+//! Revealing Elements on Scroll
+
+const allSections = document.querySelectorAll(".section");
+
+const revealSection = function (entries, observer) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    entry.target.classList.remove("section--hidden");
+    observer.unobserve(entry.target); //? islem bittiginde o anki target icin observe islemini durdur.
+  });
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
+});
