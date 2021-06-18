@@ -120,3 +120,30 @@ nav.addEventListener("mouseover", handleHover.bind(0.5));
 nav.addEventListener("mouseout", handleHover.bind(1));
 
 //? Event handler function'i sadece tek bir arguman alabilir. Eger baska valuelar gondermek istiyorsak, bunu addEventListener'da function'i bind ile tanimlayarak, arguman olarak istedigimiz degeri gondeririz. Ayri olusturdugumuz event handler functionunda ise bu value'leri this keywordu ile yakalariz. (Closure function ile de olabilir)
+
+//! Intersection Observer API (Sticky Nav)
+
+const header = document.querySelector(".header");
+const navHeight = nav.getBoundingClientRect().height;
+
+//? Callback fonksiyonu:
+
+const stickyNav = function (entries) {
+  const [entry] = entries; //? entries[0]
+  //console.log(entry);
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+  //? intersecting false oldugunda (header ekrandan ciktiginda) sticky classini ekle. ekrana girdiginde classi sil.
+};
+
+//? Observer tanimlama ve options:
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`, //? margin'i dinamik olarak ayarladik
+});
+
+//? Hedef belirleyip izlemek:
+
+headerObserver.observe(header);

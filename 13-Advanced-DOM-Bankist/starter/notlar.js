@@ -8,7 +8,7 @@ console.log(document.documentElement); //? tum html sayfasi
 console.log(document.head); //? head
 console.log(document.body); //? body
 
-const header = document.querySelector(".header"); //? .header'la uyusan ilk element
+//const header = document.querySelector(".header"); //? .header'la uyusan ilk element
 const allSections = document.querySelectorAll(".section"); //? section'la uyusan tum elementler
 console.log(allSections); //? NodeList olarak donuyor
 
@@ -276,3 +276,55 @@ console.log(h1.parentElement.children); //? h1'in tum kardes elementleri. oncne 
 
 //? scroll isaretledigimiz yeri gectigi anda sticky devreye giriyor.
 //? Bu yontem performans icin kullanissiz.
+
+//! Sticky Navigation - Intersection Observer API
+
+//? Seçenekler (Options)
+/* Seçeneklerin hiçbirisini vermeden tanımlayabilirsiniz. Seçeneklerin ne olduğunu açıklamak gerekirse;
+
+root - Hedefin görünürlüğünü kontrol ederken kullanacağımız scroll olan objemiz, yok ise varsayılan olarak en üst nesnesi kullanır.
+rootMargin - Hedefin görünürlüğünün mesafesini ayarlamak için kullanılır. Örneğin 100px verirseniz 100px yukarıdan itibaren görünür kabul edilecektir, negatif değer verirseniz örneğin -100px gibi, o zaman da 100px içeriden itibaren görünmeye başlayacaktır.
+threshold: Hedefin görünürlüğünün yüzdesini ayarlar. Örneğin %50'den sonra görünür olduğunu anlamka istiyorsak 0.5 yazmak yeterli. 0 ile 1 arasında float değer alır. Ayrıca birden fazla değerde alabilir. Örneğin %20, %50 ve %80'de çalışması için [0.2, 0.5, 0.8] yazmanız gerekir. 
+instance'ı oluşturduktan sonra artık bir hedef belirleyip observe() ile izlemeye başlayabiliriz.
+*/
+
+//? const observer = new IntersectionObserver(callback, options)
+//? observer.observe(element);
+
+//? entries: threshold array
+//? threshold: 0 hedef tamamen ekrandan cikinca, 1: ekrani tamamen kapladiginda.
+//? intersectionRatio, isIntersecting
+
+/* const obsCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+};
+
+const obsOptions = {
+  root: null,
+  threshold: 0.1
+}
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+
+observer.observe(section1); */
+
+//? header ekrandan tamamen ciktiginda islem yapmak icin ayarliyoruz:
+
+// const header = document.querySelector(".header");
+
+/* const stickyNav = function (entries) {
+  const [entry] = entries; //? entries[0]
+  //console.log(entry);
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+  //? intersecting false oldugunda (header ekrandan ciktiginda) sticky classini ekle. ekrana girdiginde classi sil.
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+});
+
+headerObserver.observe(header); */
