@@ -170,3 +170,32 @@ allSections.forEach(section => {
   sectionObserver.observe(section);
   section.classList.add("section--hidden");
 });
+
+//! Lazy Loading Images
+
+//?  gercek src'a resmin dusuk kaliteli versiyonunu ekle. data-src orjinal versiyon. css filter ile blur yap. js'de threshold belirleyip orjinal versiyona degistirip blur'u kaldir.
+
+const imgTargets = document.querySelectorAll("img[data-src]"); //? data-src attr'i olan img'lar.
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  //? Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener("load", function () {
+    entry.target.classList.remove("lazy-img");
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: "200px",
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
