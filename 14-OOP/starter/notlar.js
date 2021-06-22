@@ -28,13 +28,13 @@
 //? Technique to create objects from a function
 //? This is how built-in objects like Arrays, Maps or Sets are actually implemented
 
-//* ES6 Classes
+//* 2 - ES6 Classes
 
 //? Modern alternative to constructor function syntax
 //? "Syntactic sugar": behind the scenes, ES6 classes work exactyly like constructor functions
 //? ES6 classes do NOT behave like classes in "classical OOP"
 
-//* Object.create()
+//* 3 - Object.create()
 
 //? The easiest and most straightforward way of linking an object to prototype object.
 
@@ -67,5 +67,31 @@ const duman = new Person("Duman", 2014);
 console.log(duman);
 
 console.log(esra instanceof Person); // true
+
+//! PROTOTYPES
+
+console.log(Person.prototype);
+
+//? Method'lari prototype icinde olustur:
+//? Person constructor'indan yaratilan tum objeler bu methoda erisebilir.
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+duman.calcAge();
+
+console.log(esra.__proto__);
+console.log(esra.__proto__ === Person.prototype); // true
+
+console.log(Person.prototype.isPrototypeOf(esra)); // true
+console.log(Person.prototype.isPrototypeOf(Person)); // false
+
+Person.prototype.species = "Homo Sapiens";
+console.log(esra.species);
+
+console.log(esra.hasOwnProperty("firstName")); // true
+console.log(esra.hasOwnProperty("species")); // false
+
 
 
