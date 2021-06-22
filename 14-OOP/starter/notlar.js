@@ -93,12 +93,33 @@ console.log(esra.species);
 console.log(esra.hasOwnProperty("firstName")); // true
 console.log(esra.hasOwnProperty("species")); // false
 
-
 //! PROTOTYPAL INHERITANCE AND THE PROTOTYPE CHAIN
 
-//? Object [esra] (__proto__ : Person.prototype) -> 
-//? Prototype [Person] -> (__proto__: Object.prototype) -> 
+//? Object [esra] (__proto__ : Person.prototype) ->
+//? Prototype [Person] -> (__proto__: Object.prototype) ->
 //? Prototype [Object](__proto__: null)
 
 //? {...} === new Object(...) // Built-in contructor function for objects. This is used when we write an object literal.
+
+//! PROTOTYPAL INHERITANCE ON BUILT-IN OBJECTS
+
+console.log(esra.__proto__); // Person.prototype
+console.log(esra.__proto__.__proto__); // Object.prototype (top of prototype chain)
+console.log(esra.__proto__.__proto__.__proto__); // null
+
+const arr = [3, 6, 6, 5, 6, 9, 9]; // new Array === []
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype); // true
+console.log(arr.__proto__.__proto__); // Object.prototype (top)
+
+//? Array'in prototype'ine etki ederek method olusturmak (Kullanma)
+
+/* Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique()); */
+
+const h1 = document.querySelector("h1");
+console.dir(x => x + 1);
 
