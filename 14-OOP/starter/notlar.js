@@ -94,4 +94,11 @@ console.log(esra.hasOwnProperty("firstName")); // true
 console.log(esra.hasOwnProperty("species")); // false
 
 
+//! PROTOTYPAL INHERITANCE AND THE PROTOTYPE CHAIN
+
+//? Object [esra] (__proto__ : Person.prototype) -> 
+//? Prototype [Person] -> (__proto__: Object.prototype) -> 
+//? Prototype [Object](__proto__: null)
+
+//? {...} === new Object(...) // Built-in contructor function for objects. This is used when we write an object literal.
 
