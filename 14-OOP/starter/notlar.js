@@ -38,5 +38,34 @@
 
 //? The easiest and most straightforward way of linking an object to prototype object.
 
+//! Constructor Functions and the new Operator
+
+//? Arrow function, kendi this keyword'u olmadigi icin, constructor function tanimlamak icin kullanilamior.
+
+//? constructor function 'new' operatoru ile cagirilir.
+//* new operatoru ile cagirildiginda sirasiyla:
+//? 1. Yeni bir bos obje yaratilir. => {}
+//? 2. Fonksiyon cagirilir, this keyword'u o obje olur => this = {}
+//? 3. Bu obje prototype'e baglanir.
+//? 4. Fonksiyon otomatik olarak objeyi return eder.
+
+const Person = function (firstName, birthYear) {
+  // Instance properties
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+
+  // Never create a method inside constructor
+  /*     this.calcAge = function () {
+        console.log(2037 - this.birthYear);
+    } */
+};
+
+const esra = new Person("Esra", 1985);
+console.log(esra);
+
+const duman = new Person("Duman", 2014);
+console.log(duman);
+
+console.log(esra instanceof Person); // true
 
 
