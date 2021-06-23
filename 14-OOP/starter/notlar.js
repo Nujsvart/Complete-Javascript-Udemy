@@ -293,3 +293,35 @@ console.log(mike instanceof Person); // true
 Student.prototype.constructor = Student; //? Onceden Person gosterdigi icin fixledik.
 
 console.dir(Student.prototype.constructor);
+
+//! INHERITANCE BETWEEN CLASSES: ES6 CLASSES
+//* extends - super()
+
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    //? mutlaka once super() (parent) cagirmak gerekiyor.
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  //? Polymorphsism (Overwrite)
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student I feel more like ${
+        2037 - this.birthYear + 10
+      }`
+    );
+  }
+}
+
+const martha = new StudentCl("Martha Jones", 2012, "Computer Science");
+console.log(martha);
+
+martha.introduce();
+martha.calcAge();
