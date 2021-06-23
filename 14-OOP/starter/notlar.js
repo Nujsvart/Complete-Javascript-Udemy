@@ -49,9 +49,9 @@
 //? 3. Bu obje prototype'e baglanir.
 //? 4. Fonksiyon otomatik olarak objeyi return eder.
 
-const Person = function (fullName, birthYear) {
+const Person = function (firstName, birthYear) {
   // Instance properties
-  this.fullName = fullName;
+  this.firstName = firstName;
   this.birthYear = birthYear;
 
   // Never create a method inside constructor
@@ -251,4 +251,45 @@ const sarah = Object.create(PersonProto);
 sarah.init("Sarah", 1979); //? propertyleri init fonksiyonu ile ayarladik.
 sarah.calcAge();
 
+//! INHERITANCE BETWEEN CLASSES: CONSTRUCTOR FUNCTIONS
 
+/*const Person = function (fullName, birthYear) {
+  this.fullName = fullName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+}; */
+
+const Student = function (firstName, birthYear, course) {
+  /*   this.firstName = firstName;
+  this.birthYear = birthYear; */
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+//? Burada Person.prototype dan inherit oluyor fakat objeleri farkli oluyor.
+//! Linking Prototypes
+
+Student.prototype = Object.create(Person.prototype); //? empty object, methodlari sonradan eklemek gerekiyor. asagidaki gibi.
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student("Mike", 2020, "Computer Science");
+
+mike.introduce();
+mike.calcAge(); //? inherit yoluyla Person classinin bu methoduna eristik.
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+console.log(mike.__proto__.__proto__.__proto__);
+
+console.log(mike instanceof Student); //true
+console.log(mike instanceof Person); // true
+
+Student.prototype.constructor = Student; //? Onceden Person gosterdigi icin fixledik.
+
+console.dir(Student.prototype.constructor);
