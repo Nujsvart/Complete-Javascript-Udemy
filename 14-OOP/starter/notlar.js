@@ -138,7 +138,9 @@ class PersonCl {
     this.birthYear = birthYear;
   }
 
+  //! Instance Methods
   // Methods will be added to .prototype property
+
   calcAge() {
     console.log(2037 - this.birthYear);
   }
@@ -161,6 +163,14 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  //! Static method
+  //? Objelerden erisilemiyor
+
+  static hey() {
+    console.log("Hey there");
+    // console.log(this) // PersonCl
+  }
 }
 
 //? all of these methods that we write in the class, outside of the constructor, will be on the prototype of the objects.
@@ -180,6 +190,7 @@ console.log(jessica._fullName);
 }
  */
 jessica.greet();
+PersonCl.hey(); //! Static method
 
 //? 1. Classes are NOT hoisted
 //? 2. Classes are first-class citizes (fonksiyonlara arguman olarak verilebilir, return edilebilir)
