@@ -49,9 +49,9 @@
 //? 3. Bu obje prototype'e baglanir.
 //? 4. Fonksiyon otomatik olarak objeyi return eder.
 
-const Person = function (firstName, birthYear) {
+const Person = function (fullName, birthYear) {
   // Instance properties
-  this.firstName = firstName;
+  this.fullName = fullName;
   this.birthYear = birthYear;
 
   // Never create a method inside constructor
@@ -90,7 +90,7 @@ console.log(Person.prototype.isPrototypeOf(Person)); // false
 Person.prototype.species = "Homo Sapiens";
 console.log(esra.species);
 
-console.log(esra.hasOwnProperty("firstName")); // true
+console.log(esra.hasOwnProperty("fullName")); // true
 console.log(esra.hasOwnProperty("species")); // false
 
 //! PROTOTYPAL INHERITANCE AND THE PROTOTYPE CHAIN
@@ -133,8 +133,8 @@ console.dir(x => x + 1);
 // class declaration
 
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
 
@@ -144,20 +144,39 @@ class PersonCl {
   }
 
   greet() {
-    console.log(`Hey ${this.firstName}`);
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  //! Set a property that already exists
+
+  set fullName(name) {
+    if (name.includes(" ")) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
   }
 }
 
 //? all of these methods that we write in the class, outside of the constructor, will be on the prototype of the objects.
 
-const jessica = new PersonCl("Jessica", 1996);
+const jessica = new PersonCl("Jessica Davis", 1996);
 
 console.log(jessica);
 jessica.calcAge();
 console.log(jessica.__proto__ === PersonCl.prototype); // true
 
+console.log(jessica.age); //? getting
+console.log(jessica.fullName);
+console.log(jessica._fullName);
+
 /* PersonCl.prototype.greet = function () {
-  console.log(`Hey ${this.firstName}`);
+  console.log(`Hey ${this.fullName}`);
 }
  */
 jessica.greet();
@@ -165,4 +184,24 @@ jessica.greet();
 //? 1. Classes are NOT hoisted
 //? 2. Classes are first-class citizes (fonksiyonlara arguman olarak verilebilir, return edilebilir)
 //? 3. Classes are executed in strict mode
+
+//! SETTERS AND GETTERS
+
+const account = {
+  owner: "Jonas",
+  movements: [200, 530, 120, 300],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest); //? getting
+
+account.latest = 50; //? setting
+console.log(account.movements);
 
