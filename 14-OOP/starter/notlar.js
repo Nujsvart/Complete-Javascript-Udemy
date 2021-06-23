@@ -325,3 +325,23 @@ console.log(martha);
 
 martha.introduce();
 martha.calcAge();
+
+//! INHERITANCE BETWEEN CLASSES: Object.create()
+
+const StudentProto = Object.create(PersonProto); //? PersonProto'dan inherit edildi.
+
+//? constructor
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+//? method
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto); //? StudentProto'dan inherit edildi.
+jay.init("Jay", 2010, "Computer Science");
+jay.introduce();
+jay.calcAge();
