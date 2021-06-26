@@ -13,6 +13,8 @@ const inputElevation = document.querySelector(".form__input--elevation");
 
 //* Refactoring
 
+//! APP ARCHITECTURE
+
 class App {
   #map;
   #mapEvent;
@@ -100,3 +102,51 @@ class App {
 }
 
 const app = new App(); //? objeyi olusturduk.
+
+//********************************************************************* */
+
+//! WORKOUT ARCHITECTURE
+
+class Workout {
+  date = new Date();
+  id = Date.now().toString(36) + Math.random().toString(36).slice(2);
+  //? generating unique ID
+
+  constructor(coords, distance, duration) {
+    this.coords = coords;
+    this.distance = distance; // km
+    this.duration = duration; // min
+  }
+}
+
+class Running extends Workout {
+  constructor(coords, distance, duration, cadence) {
+    super(coords, distance, duration);
+    this.cadence = cadence;
+    this.calcPace();
+  }
+
+  calcPace() {
+    this.pace = this.duration / this.distance;
+    return this.pace;
+  }
+}
+
+class Cycling extends Workout {
+  constructor(coords, distance, duration, elevationGain) {
+    super(coords, distance, duration);
+    this.elevationGain = elevationGain;
+    this.calcSpeed();
+  }
+
+  calcSpeed() {
+    this.speed = this.distance / (this.duration / 60);
+    return this.speed;
+  }
+}
+
+/* const run1 = new Running([39, -25], 120, 60, 20);
+const cyc1 = new Cycling([39, -24], 110, 20, 30);
+
+console.log(run1);
+console.log(cyc1); */
