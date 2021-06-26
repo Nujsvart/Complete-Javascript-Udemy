@@ -15,6 +15,7 @@ const inputElevation = document.querySelector(".form__input--elevation");
 class App {
   #map;
   #mapEvent;
+  #mapZoomLevel = 13;
   #workouts = [];
 
   constructor() {
@@ -27,6 +28,8 @@ class App {
 
     inputType.addEventListener("change", this._toggleElevationField);
     //? Cagirilan callback'in icinde this gecmedigi icin bind etmeye gerek yok.
+
+    containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
   }
 
   _getPosition() {
@@ -50,7 +53,7 @@ class App {
     //? Leaflet API
     const coords = [latitude, longitude];
 
-    this.#map = L.map("map").setView(coords, 13);
+    this.#map = L.map("map").setView(coords, this.#mapZoomLevel);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
       this.#map
@@ -156,9 +159,9 @@ class App {
           className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent(`${
-        workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"
-      } ${workout.description}`)
+      .setPopupContent(
+        `${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`
+      )
       .openPopup();
   }
 
@@ -214,6 +217,29 @@ class App {
 
     form.insertAdjacentHTML("afterend", html);
   }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest(".workout");
+
+    if (!workoutEl) return;
+
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+
+    //? Leaflet
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+
+    // using the public interface
+
+    /*     workout.click();
+    console.log(workout) */
+  }
 }
 
 const app = new App(); //? objeyi olusturduk.
@@ -228,6 +254,7 @@ class Workout {
   date = new Date();
   id = Date.now().toString(36) + Math.random().toString(36).slice(2);
   //? generating unique ID
+  clicks = 0;
 
   constructor(coords, distance, duration) {
     this.coords = coords;
@@ -243,6 +270,10 @@ class Workout {
       this.type === "running" ? "Koşu" : "Bisiklet"
     } 🌈 ${this.date.getDate()} ${months[this.date.getMonth()]}`;
   }
+
+  /*   click() {
+    this.clicks++;
+  } */
 }
 
 //* Child
