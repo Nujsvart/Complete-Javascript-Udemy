@@ -20,15 +20,17 @@ class App {
 
   constructor() {
     //? page yuklenir yuklenmez calisacak.
+    // Get user's position
     this._getPosition();
 
+    // Get data from local storage
+    this._getLocalStorage();
+
+    // Attach event handlers
     //* Event listener'da callback function tanimlanirken her zaman sonuna .bind(this) eklenmelidir.
-
     form.addEventListener("submit", this._newWorkout.bind(this));
-
     inputType.addEventListener("change", this._toggleElevationField);
     //? Cagirilan callback'in icinde this gecmedigi icin bind etmeye gerek yok.
-
     containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
   }
 
@@ -62,6 +64,9 @@ class App {
     //? Leaflet'de tanimli event listener methodunu cagiriyoruz.
     //* Map'e tiklandiginda:
     this.#map.on("click", this._showForm.bind(this));
+
+    //? harita yuklendikten sonra localstorage'deki datanin markerlarini haritada gostermesi icin:
+    this.#workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
   _showForm(mapE) {
@@ -145,6 +150,9 @@ class App {
 
     //? Hide form + Clear input fields
     this._hideForm();
+
+    //? Set local storage to all workouts
+    this._setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
@@ -240,6 +248,33 @@ class App {
     /*     workout.click();
     console.log(workout) */
   }
+
+  _setLocalStorage() {
+    localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+    //? obje olarak alip json string'e cevirdik.
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("workouts"));
+    //? parse ile stringi tekrar objeye cevirdik.
+    console.log(data);
+
+    if (!data) return; //? data yoksa asagidaki kodlari calistirma.
+
+    this.#workouts = data;
+    //? baslangicta calistridigimiz bos workouts arrayini, localstorage'de saklayip cektigimiz data'ya esitledik.
+
+    this.#workouts.forEach(work => {
+      this._renderWorkout(work);
+    });
+
+    //? gelen her data elemanini render methodu ile UI'da gosteriyoruz.
+  }
+
+  /*   reset() {
+    localStorage.removeItem("workouts");
+    location.reload();
+  } */
 }
 
 const app = new App(); //? objeyi olusturduk.
