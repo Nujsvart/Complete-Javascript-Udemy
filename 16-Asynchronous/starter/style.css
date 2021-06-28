@@ -29,6 +29,7 @@ body {
 .countries {
   /* margin-bottom: 8rem; */
   display: flex;
+  flex-wrap: wrap;
 
   font-size: 2rem;
   opacity: 0;
@@ -41,7 +42,7 @@ body {
   font-size: 1.8rem;
   width: 30rem;
   border-radius: 0.7rem;
-  margin: 0 3rem;
+  margin: 0 3rem 3rem 3rem;
   /* overflow: hidden; */
 }
 

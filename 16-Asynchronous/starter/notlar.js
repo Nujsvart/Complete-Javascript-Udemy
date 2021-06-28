@@ -43,3 +43,5 @@
 
 //? Most popular API data format --> JSON data format
 
+//! OUR FIRST AJAX CALL: XMLHttpRequest
+
