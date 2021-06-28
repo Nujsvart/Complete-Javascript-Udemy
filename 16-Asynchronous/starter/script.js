@@ -41,10 +41,22 @@ request.send(); //? API'ye istek gonderdik. */
 //? then(callback(response)) ==> promise fullfilled oldugunda calisacak.
 //? json() methodu fetch'e ozel bir method. response body'nin icindeki data'yi alip yeni bir promise donduruyor. sonrasinda chaining (then()) ile handle etmek gerekiyor.
 
+//! Chaining Promises
+
 const getCountryData = function (country) {
   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
     .then(response => response.json())
-    .then(data => renderCountry(data[0]));
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbour = data[0].borders[0];
+
+      if (!neighbour) return;
+
+      // Country 2
+      return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, "neighbour"));
 };
 
 getCountryData("Turkey");
