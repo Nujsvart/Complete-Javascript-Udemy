@@ -51,7 +51,7 @@
 
 //? Promises ES6 futures.
 
-//* Promise advantages: 
+//* Promise advantages:
 //? We no longer need to rely on events and callbacks passed into asynchronous functions to handle asynchronous results.
 //? Instead of nesting callbacks, we can chain promises for a sequence of asynchronous operations: escaping callback hell.
 
@@ -103,7 +103,6 @@ const getCountryData = function (country) {
 
 getCountryData("Turkey");
 getCountryData("USA"); */
-
 
 //! BEFORE PROMISES AND THE FETCH API
 
