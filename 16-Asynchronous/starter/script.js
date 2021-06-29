@@ -22,7 +22,12 @@ const renderCountry = function (data, className = " ") {
     `;
 
   countriesContainer.insertAdjacentHTML("beforeend", html);
-  countriesContainer.style.opacity = 1;
+  //countriesContainer.style.opacity = 1;
+};
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText("beforeend", msg);
+  //countriesContainer.style.opacity = 1;
 };
 
 //* Old Way
@@ -42,6 +47,8 @@ request.send(); //? API'ye istek gonderdik. */
 //? json() methodu fetch'e ozel bir method. response body'nin icindeki data'yi alip yeni bir promise donduruyor. sonrasinda chaining (then()) ile handle etmek gerekiyor.
 
 //! Chaining Promises
+//! Handling Rejected Promises
+//? chain'in sonundaki catch() methodu tum promise chainde olusacak error'u yakalamak ve islem yapmak icin kullanir. catch(callback)
 
 const getCountryData = function (country) {
   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
@@ -56,7 +63,18 @@ const getCountryData = function (country) {
       return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
     })
     .then(response => response.json())
-    .then(data => renderCountry(data, "neighbour"));
+    .then(data => renderCountry(data, "neighbour"))
+    .catch(err => {
+      console.error(`${err} ❗❗`);
+      renderError(`Something went wrong ❗❗❗ ${err.message}. Try Again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
 };
 
-getCountryData("Turkey");
+btn.addEventListener("click", function () {
+  getCountryData("Turkey");
+});
+
+// getCountryData("asjhdashjjf");
