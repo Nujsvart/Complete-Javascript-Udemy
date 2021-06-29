@@ -30,6 +30,15 @@ const renderError = function (msg) {
   //countriesContainer.style.opacity = 1;
 };
 
+const getJSON = function (url, errorMsg = "Something went wrong!") {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(`${errorMsg} (${response.status})`);
+    }
+    return response.json();
+  });
+};
+
 //* Old Way
 
 /* const request = new XMLHttpRequest(); //? Oldschool way
@@ -51,8 +60,10 @@ request.send(); //? API'ye istek gonderdik. */
 //? chain'in sonundaki catch() methodu tum promise chainde olusacak error'u yakalamak ve islem yapmak icin kullanir. catch(callback)
 
 const getCountryData = function (country) {
-  fetch(`https://restcountries.eu/rest/v2/name/${country}`)
-    .then(response => response.json())
+  getJSON(
+    `https://restcountries.eu/rest/v2/name/${country}`,
+    "Country not found!"
+  )
     .then(data => {
       renderCountry(data[0]);
       const neighbour = data[0].borders[0];
@@ -60,9 +71,11 @@ const getCountryData = function (country) {
       if (!neighbour) return;
 
       // Country 2
-      return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
+      return getJSON(
+        `https://restcountries.eu/rest/v2/alpha/${neighbour}`,
+        "Country not found!"
+      );
     })
-    .then(response => response.json())
     .then(data => renderCountry(data, "neighbour"))
     .catch(err => {
       console.error(`${err} ❗❗`);
@@ -77,4 +90,4 @@ btn.addEventListener("click", function () {
   getCountryData("Turkey");
 });
 
-// getCountryData("asjhdashjjf");
+//getCountryData("asjhdashjjf");
