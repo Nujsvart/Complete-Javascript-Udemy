@@ -165,3 +165,14 @@ const getCountryAndNeighbourData = function (country) {
 };
 
 getCountryAndNeighbourData("Turkey");  */
+
+//! THE EVENT LOOP IN PRACTICE
+
+console.log("Test start");
+setTimeout(() => {
+  console.log("0 sec timer");
+}, 0);
+Promise.resolve("Resolved promise 1").then(res => console.log(res));
+console.log("Test end");
+
+//? once global synchronous code calisiyor. (Test start ve test end), sonra Promise calisiyor (event loop'ta microtask execute oncelikli oldugu icin). En son da setTimeoutt calisiyor.
