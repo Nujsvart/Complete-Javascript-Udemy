@@ -176,3 +176,58 @@ Promise.resolve("Resolved promise 1").then(res => console.log(res));
 console.log("Test end");
 
 //? once global synchronous code calisiyor. (Test start ve test end), sonra Promise calisiyor (event loop'ta microtask execute oncelikli oldugu icin). En son da setTimeoutt calisiyor.
+
+//! BUILDING A SIMPLE PROMISE
+
+//? Building
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log("Lottery draw is happening");
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve("You WIN!");
+    } else {
+      reject(new Error("You lost your money!"));
+    }
+  }, 2000);
+});
+
+//? Consuming
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+//* Promisifying setTimeout
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(2)
+  .then(() => {
+    console.log("I waited for 2 seconds");
+    return wait(1);
+  })
+  .then(() => console.log("I waited 1 second"));
+
+//? asagidakinin aynisi
+
+/* setTimeout(() => {
+  console.log("1 second passed");
+  setTimeout(() => {
+    console.log("2 seconds passed");
+    setTimeout(() => {
+      console.log("3 seconds passed");
+      setTimeout(() => {
+        console.log("4 seconds passed");
+      }, 1000);
+    }, 1000);
+  }, 1000);
+}, 1000);
+ */
+
+//? Immediately runs
+
+Promise.resolve("abc").then(res => console.log(res));
+Promise.reject("Problem!").catch(err => console.error(err));
