@@ -231,3 +231,19 @@ wait(2)
 
 Promise.resolve("abc").then(res => console.log(res));
 Promise.reject("Problem!").catch(err => console.error(err));
+
+//! PROMISIFYING THE GEOLOCATION API
+
+/* navigator.geolocation.getCurrentPosition(
+  position => console.log(position),
+  err => console.log(err)
+);
+ */
+
+/* const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+getPosition().then(pos => console.log(pos)); */

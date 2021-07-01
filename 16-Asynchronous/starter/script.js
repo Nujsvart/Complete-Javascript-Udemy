@@ -132,7 +132,7 @@ Test data:
 § Coordinates 3: -33.933, 18.474
  */
 
-const whereAmI = function (lat, lng) {
+/* const whereAmI = function (lat, lng) {
   fetch(
     `https://geocode.xyz/${lat},${lng}?geoit=json&auth=232923401965211798374x119646`
   )
@@ -156,4 +156,43 @@ const whereAmI = function (lat, lng) {
 
 btn.addEventListener("click", function () {
   whereAmI(-33.933, 18.474);
-});
+}); */
+
+//! PROMISIFYING THE GEOLOCATION API
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+//***************************************** */
+
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+
+      return fetch(
+        `https://geocode.xyz/${lat},${lng}?geoit=json&auth=232923401965211798374x119646`
+      );
+    })
+    .then(response => {
+      if (!response.ok) throw new Error(`Too many requests ${response.status}`);
+
+      return response.json();
+    })
+    .then(data => {
+      if (data.error)
+        throw new Error(`Bir sorun olustu >> ${data.error.description}`);
+
+      console.log(data);
+      console.log(`You are in ${data.region}, ${data.country}`);
+
+      return data.country;
+    })
+    .then(getCountryData)
+    .catch(err => console.error(`${err.message}`));
+};
+
+btn.addEventListener("click", whereAmI);
