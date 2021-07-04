@@ -213,27 +213,44 @@ const getPosition = function () {
 };
 
 const whereAmI = async function () {
-  // Geolocation
-  const pos = await getPosition();
-  const { latitude: lat, longitude: lng } = pos.coords;
+  try {
+    // Geolocation
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
 
-  // Reverse geocoding
-  const resGeo = await fetch(
-    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=232923401965211798374x119646`
-  );
-  const dataGeo = await resGeo.json();
-  console.log(dataGeo);
+    // Reverse geocoding
+    const resGeo = await fetch(
+      `https://geocode.xyz/${lat},${lng}?geoit=json&auth=232923401965211798374x119646`
+    );
+    if (!resGeo.ok) throw new Error("Problem getting location data");
 
-  // Country data
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
 
-  const res = await fetch(
-    `https://restcountries.eu/rest/v2/name/${dataGeo.country}`
-  );
+    // Country data
 
-  const data = await res.json();
-  renderCountry(data[0]);
+    const res = await fetch(
+      `https://restcountries.eu/rest/v2/name/${dataGeo.country}`
+    );
+    if (!res.ok) throw new Error("Problem getting country");
+
+    const data = await res.json();
+    renderCountry(data[0]);
+  } catch (err) {
+    renderError(`💥 ${err.message}`);
+  }
 };
 
 whereAmI();
 
 btn.addEventListener("click", whereAmI);
+
+//! ERROR HANDLING WITH try...catch
+
+/* try {
+  let y = 1;
+  const x = 2;
+  x = 3;
+} catch (err) {
+  console.log(err.message);
+} */
