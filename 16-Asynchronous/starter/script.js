@@ -27,7 +27,7 @@ const renderCountry = function (data, className = " ") {
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText("beforeend", msg);
-  //countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const getJSON = function (url, errorMsg = "Something went wrong!") {
@@ -203,6 +203,8 @@ btn.addEventListener("click", function () {
 
 //? once fonksiyonu async olarak tanimliyoruz. sonra await ile fetch fullfilled olana kadar bekliyor ve sonucu variable'a depoluyoruz. (response icin .then'e gerek kalmadi)
 
+//? async function her zaman promise dondurur..
+
 //? OLD WAY:
 //? fetch(`https://restcountries.eu/rest/v2/name/${country}`).then(res => console.log(res))
 
@@ -236,12 +238,39 @@ const whereAmI = async function () {
 
     const data = await res.json();
     renderCountry(data[0]);
+
+    //! Returning Values from Async Functions
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
     renderError(`💥 ${err.message}`);
+
+    // Reject promise returned from async function
+    throw err;
   }
 };
 
-whereAmI();
+console.log("1: basladi");
+
+//? OLD WAY
+
+/* whereAmI()
+  .then(city => console.log(city))
+  .catch(err => console.error(`2: ${err.message}`))
+  .finally(() => console.log("bitti")); */
+
+//! challenge MODERN WAY
+
+(async function () {
+  try {
+    const loc = await whereAmI();
+    console.log(loc);
+  } catch (err) {
+    console.error(err.message);
+  } finally {
+    console.log("bitti");
+  }
+})();
 
 btn.addEventListener("click", whereAmI);
 
