@@ -247,3 +247,60 @@ Promise.reject("Problem!").catch(err => console.error(err)); */
 };
 
 getPosition().then(pos => console.log(pos)); */
+
+//! Other Promise Combinators: race, allSettled and any
+
+//? En onemli combinator'ler Promise.all() ve Promise.race()
+
+//* Promise.race()
+//? Birden fazla aldigi promise'lardan hangisi once fullfilled olursa onu gosteriyor.
+
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.eu/rest/v2/name/italy`),
+    getJSON(`https://restcountries.eu/rest/v2/name/egypt`),
+    getJSON(`https://restcountries.eu/rest/v2/name/mexico`),
+  ]);
+  console.log(res[0]);
+})();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error("Request took too long!"));
+    }, sec * 1000);
+  });
+};
+
+Promise.race([
+  getJSON(`https://restcountries.eu/rest/v2/name/tanzania`),
+  timeout(1),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+//* Promise.allSettled()
+
+//? fullfilled veya rejected olduguna bakmaksizin, array olarak aldigi promiselari array olarak donduruyor.
+
+//? Promise.all dan farki Promise.all eger rejected varsa sadece onu donduruyor.
+
+Promise.allSettled([
+  Promise.resolve("Success"),
+  Promise.reject("Error"),
+  Promise.resolve("Another success"),
+]).then(res => console.log(res));
+
+//* Promise.any() [ES2021]
+
+//? Birden fazla promise'i array olarak alip, ilk fullfilled (success) olan promise'i donduruyor. Rejected promise'lari ignore ediyor.
+
+//? Promise.race'den farki, rejected promise'lari ignore ediyor olmasi.
+
+Promise.any([
+  Promise.resolve("Success"),
+  Promise.reject("Error"),
+  Promise.resolve("Another success"),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
