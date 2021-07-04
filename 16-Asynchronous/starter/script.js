@@ -22,7 +22,7 @@ const renderCountry = function (data, className = " ") {
     `;
 
   countriesContainer.insertAdjacentHTML("beforeend", html);
-  //countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const renderError = function (msg) {
@@ -160,15 +160,15 @@ btn.addEventListener("click", function () {
 
 //! PROMISIFYING THE GEOLOCATION API
 
-const getPosition = function () {
+/* const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
-};
+}; */
 
 //***************************************** */
 
-const whereAmI = function () {
+/* const whereAmI = function () {
   getPosition()
     .then(pos => {
       const { latitude: lat, longitude: lng } = pos.coords;
@@ -193,6 +193,47 @@ const whereAmI = function () {
     })
     .then(getCountryData)
     .catch(err => console.error(`${err.message}`));
+}; */
+
+// btn.addEventListener("click", whereAmI);
+
+//! CONSUMING PROMISES WITH Async/Await
+
+//* whereAmI fonksiyonun async ve await ile tekrar yapimi:
+
+//? once fonksiyonu async olarak tanimliyoruz. sonra await ile fetch fullfilled olana kadar bekliyor ve sonucu variable'a depoluyoruz. (response icin .then'e gerek kalmadi)
+
+//? OLD WAY:
+//? fetch(`https://restcountries.eu/rest/v2/name/${country}`).then(res => console.log(res))
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
 };
+
+const whereAmI = async function () {
+  // Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  // Reverse geocoding
+  const resGeo = await fetch(
+    `https://geocode.xyz/${lat},${lng}?geoit=json&auth=232923401965211798374x119646`
+  );
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+
+  // Country data
+
+  const res = await fetch(
+    `https://restcountries.eu/rest/v2/name/${dataGeo.country}`
+  );
+
+  const data = await res.json();
+  renderCountry(data[0]);
+};
+
+whereAmI();
 
 btn.addEventListener("click", whereAmI);

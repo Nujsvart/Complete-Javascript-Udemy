@@ -168,12 +168,12 @@ getCountryAndNeighbourData("Turkey");  */
 
 //! THE EVENT LOOP IN PRACTICE
 
-console.log("Test start");
+/* console.log("Test start");
 setTimeout(() => {
   console.log("0 sec timer");
 }, 0);
 Promise.resolve("Resolved promise 1").then(res => console.log(res));
-console.log("Test end");
+console.log("Test end"); */
 
 //? once global synchronous code calisiyor. (Test start ve test end), sonra Promise calisiyor (event loop'ta microtask execute oncelikli oldugu icin). En son da setTimeoutt calisiyor.
 
@@ -181,7 +181,7 @@ console.log("Test end");
 
 //? Building
 
-const lotteryPromise = new Promise(function (resolve, reject) {
+/* const lotteryPromise = new Promise(function (resolve, reject) {
   console.log("Lottery draw is happening");
   setTimeout(() => {
     if (Math.random() >= 0.5) {
@@ -191,10 +191,10 @@ const lotteryPromise = new Promise(function (resolve, reject) {
     }
   }, 2000);
 });
-
+ */
 //? Consuming
 
-lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+/* lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
 //* Promisifying setTimeout
 
@@ -209,7 +209,7 @@ wait(2)
     console.log("I waited for 2 seconds");
     return wait(1);
   })
-  .then(() => console.log("I waited 1 second"));
+  .then(() => console.log("I waited 1 second")); */
 
 //? asagidakinin aynisi
 
@@ -229,8 +229,8 @@ wait(2)
 
 //? Immediately runs
 
-Promise.resolve("abc").then(res => console.log(res));
-Promise.reject("Problem!").catch(err => console.error(err));
+/* Promise.resolve("abc").then(res => console.log(res));
+Promise.reject("Problem!").catch(err => console.error(err)); */
 
 //! PROMISIFYING THE GEOLOCATION API
 
