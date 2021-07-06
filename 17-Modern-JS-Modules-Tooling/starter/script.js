@@ -24,3 +24,33 @@ add("apples", 4);
 console.log(cart); //? modulun icindeki gercek cart arrayini mutate ediyoruz. (live connection)
 
 //? imports are not copies of exports. they are instead like a live connection.
+
+//! THE MODULE PATTERN
+
+//? Moduldeki elemanlari IEFE fonskiyon icinde tanimlayip, public olmasini istediklerimizi obje olarak donduruyoruz.
+
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} added to cart`);
+  };
+
+  const orderStock = function (product, quantity) {
+    console.log(`${quantity} ${product} ordered from supplier`);
+  };
+
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+
+ShoppingCart2.addToCart("apple", 4);
+console.log(ShoppingCart2);
